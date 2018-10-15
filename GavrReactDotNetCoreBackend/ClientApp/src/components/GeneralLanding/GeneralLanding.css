@@ -1,0 +1,37 @@
+
+.about {
+    background-color: black;
+}
+
+.react-parallax-content {
+    text-align: center;
+    top: 50%;
+    color: white;
+}
+
+.react-parallax-content h1 {
+    font-family: 'Bad Script', cursive;
+    font-size: 80px;
+}
+
+.react-parallax {
+    height: 1200px;
+
+}
+
+@media screen and (max-width: 800px) {
+    .react-parallax {
+        height: 600px;
+    }
+
+    .react-parallax-content h1 {
+        font-family: 'Bad Script', cursive;
+        font-size: 40px;
+    }
+}
+
+/*@media screen and (max-width: 450px) {*/
+    /*.react-parallax {*/
+        /*height: 500px;*/
+    /*}*/
+/*}*/

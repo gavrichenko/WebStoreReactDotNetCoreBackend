@@ -1,0 +1,12 @@
+.promo {
+    margin: 40px 40px;
+}
+
+.promo h1 {
+    font-family: 'Bad Script', cursive;
+    font-size: 40px;
+}
+
+.promo li{
+    margin: 50px 0px;
+}

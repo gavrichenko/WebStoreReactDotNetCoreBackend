@@ -33,10 +33,10 @@ namespace GavrReactDotNetCoreBackend.Controllers
 
         [Route("token")]
         [HttpPost]
-        public async Task Token()
+        public async Task Token([FromBody]LoginModel model)
         {
-            var username = Request.Form["username"];
-            var password = Request.Form["password"];
+            var username = model.Email;
+            var password = model.Password;
 
             var identity = GetIdentity(username, password).Result;
             if (identity == null)
@@ -60,7 +60,7 @@ namespace GavrReactDotNetCoreBackend.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                username = identity.Name
+                username = identity.Name // todo: add role to the token
             };
 
             // сериализация ответа
@@ -77,7 +77,7 @@ namespace GavrReactDotNetCoreBackend.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, "user") //todo: доделать роли
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, "user") // todo: доделать роли
                 };
                 ClaimsIdentity claimsIdentity =
                     new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,

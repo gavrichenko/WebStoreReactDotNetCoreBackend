@@ -1,0 +1,47 @@
+/*header{*/
+  /*margin: 15px 15px;*/
+
+  /*!* «включаем» FlexBox режим *!*/
+  /*display: flex;*/
+
+  /*!* Размещаем элементы внутри шапки *!*/
+  /*justify-content: space-between;*/
+
+  /*!* Выравниваем элементы вертикально посередине*!*/
+  /*align-items: center;*/
+/*}*/
+
+.ui.menu .item>img:not(.ui) {
+  width: 60px;
+}
+
+header .nameOfLogo {
+  margin: 5px;
+  font-family: 'Bad Script', cursive;
+  font-size: 40px;
+}
+
+header a.item {
+  font-family: 'Bad Script', cursive;
+  font-size: 30px;
+}
+
+.header__link {
+  display: flex;
+}
+
+@media (max-width: 1200px){
+  /*header{*/
+    /*!* Изменяем направление оси в шапке на вертикальное *!*/
+    /*flex-direction: column;*/
+
+    /*!* Выравниваем элементы в «шапке» влево *!*/
+    /*align-items: flex-start;*/
+  /*}*/
+  header a.item {
+    font-family: 'Bad Script', cursive;
+    font-size: 20px;
+  }
+
+
+}

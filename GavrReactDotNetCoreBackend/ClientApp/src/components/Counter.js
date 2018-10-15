@@ -1,31 +1,55 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {increment} from '../AC'
+const axios = require('axios');
+// const dfg = require('querystring');
 
-export class Counter extends Component {
-  displayName = Counter.name
 
-  constructor(props) {
-    super(props);
-    this.state = { currentCount: 0 };
-    this.incrementCounter = this.incrementCounter.bind(this);
-  }
+class Counter extends Component {
 
-  incrementCounter() {
-    this.setState({
-      currentCount: this.state.currentCount + 1
-    });
-  }
+  static propTypes = {
+    counter: PropTypes.number
+  };
 
   render() {
-    return (
+    return(
       <div>
-        <h1>Counter</h1>
-
-        <p>This is a simple example of a React component.</p>
-
-        <p>Current count: <strong>{this.state.currentCount}</strong></p>
-
-        <button onClick={this.incrementCounter}>Increment</button>
+        Counter: {this.props.counter}
+        <button onClick={this.handleIncrement}>Increment me</button>
+        <button onClick={this.handleGet}>get all task</button>
+        <button onClick={this.handlePost}>post the new task</button>
       </div>
-    );
+    )
+  }
+
+  handleGet = () => {
+    console.log('getting: ');
+    axios
+      .get('https://salty-ridge-37026.herokuapp.com/tasks/')
+      .then(response => (console.log(response.data)))
+  };
+
+  handlePost = () => {
+    console.log('creating: ');
+    const data = {name: "ololo"};
+    axios
+      .post('https://salty-ridge-37026.herokuapp.com/tasks', data)
+      .then(response => (console.log(response.data)))
+      .catch(e => console.log(e));
+  };
+
+  handleIncrement = () => {
+    console.log('incrementing');
+    return this.props.dispatch(increment())
   }
 }
+function mapStateToProps(state) {
+  return {
+    counter: state.count
+  }
+}
+
+const decorator = connect(mapStateToProps);
+
+export default decorator(Counter);

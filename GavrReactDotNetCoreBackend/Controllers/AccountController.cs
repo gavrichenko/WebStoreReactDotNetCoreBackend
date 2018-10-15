@@ -33,20 +33,20 @@ namespace GavrReactDotNetCoreBackend.Controllers
             return this.BadRequest();
         }
 
-        [Route("login")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([FromBody]LoginModel model)
-        {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-            if (result.Succeeded)
-            {
-                return this.Ok();
-            }
-            else
-            {
-                return this.Unauthorized();
-            }
+        //[Route("login")]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Login([FromBody]LoginModel model)
+        //{
+        //    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+        //    if (result.Succeeded)
+        //    {
+        //        return this.Ok();
+        //    }
+        //    else
+        //    {
+        //        return this.Unauthorized();
+        //    }
             //if (result.Succeeded)
             //{
             //    // проверяем, принадлежит ли URL приложению
@@ -63,6 +63,6 @@ namespace GavrReactDotNetCoreBackend.Controllers
             //{
             //    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
             //}          
-        }
+        //}
     }
 }

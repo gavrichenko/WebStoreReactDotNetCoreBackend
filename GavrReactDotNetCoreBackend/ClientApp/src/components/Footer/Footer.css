@@ -1,0 +1,22 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  right: 0;
+  left: 0;
+  padding: 0 10px;
+
+  background: black;
+  color: dimgrey;
+}
+
+@media (max-width: 500px) {
+  .footer{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

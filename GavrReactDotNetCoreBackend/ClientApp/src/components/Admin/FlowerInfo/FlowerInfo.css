@@ -1,0 +1,10 @@
+.flowerInfo {
+    display: flex;
+}
+
+.flowerInfo__segment {
+    min-height: 400px;
+    /*min-width: 500px;*/
+    height: 100%;
+}
+

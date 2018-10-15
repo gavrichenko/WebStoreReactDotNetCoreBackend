@@ -1,0 +1,35 @@
+.contacts {
+    display: flex;
+    margin: 10px 10px;
+}
+
+.contacts__detail h1{
+    font-family: 'Bad Script', cursive;
+    font-size: 40px;
+    margin: 10px 40px;
+}
+
+ul {
+    margin-bottom: 40px;
+}
+
+li {
+    font-family: 'Bad Script', cursive;
+    font-size: 20px;
+    list-style-type: none;
+    margin: 10px 15px
+}
+
+@media (max-width: 767px){
+    .contacts {
+    /* Изменяем направление оси на вертикальное */
+    flex-direction: column;
+
+    /* Выравниваем элементы влево */
+    align-items: flex-start;
+    }
+
+    .contacts__map {
+        margin: auto;
+    }
+}

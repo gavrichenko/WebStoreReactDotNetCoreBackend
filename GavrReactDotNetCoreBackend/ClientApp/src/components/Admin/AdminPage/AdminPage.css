@@ -1,0 +1,23 @@
+.admin {
+    margin: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.admin pre {
+    font:  22px/1.5 Times, 'Times New Roman', serif;
+}
+
+.adminWrapper h1 {
+    text-align: center;
+}
+
+@media (max-width: 1000px) {
+    .admin {
+        /* Изменяем направление оси в шапке на вертикальное */
+        flex-direction: column;
+
+        /* Выравниваем элементы в «шапке» влево */
+        align-items: flex-start;
+    }
+}
