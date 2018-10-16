@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import LoginPage from "./LoginPage/LoginPage";
+import SignUpPage from "./SignUpPage/SignUpPage";
 import ContentWrapper from './ContentWrapper/ContentWrapper';
 import GeneralLanding from './GeneralLanding/GeneralLanding';
 import ContactsPage from './ContactsPage/ContactsPage';
@@ -24,6 +25,7 @@ class App extends Component {
             <Route path="/promotion" component={PromotionPage} />
             <Route path="/shop" component={ShopPage} />
 			<Route path="/login" component={LoginPage} />
+			<Route path="/signup" component={SignUpPage} />
             {/*only for admin*/}
             <Route path="/admin" component={AdminPage} />
           </ContentWrapper>

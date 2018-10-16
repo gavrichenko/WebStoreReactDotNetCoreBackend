@@ -11,6 +11,9 @@ export const ADD_FLOWER = 'ADD_FLOWER';
 // login
 export const GET_TOKEN = 'GET_TOKEN';
 
+// register
+export const SIGN_UP = 'SIGN_UP';
+
 // for loader component
 export const START = '_START';
 export const SUCCESS = '_SUCCESS';

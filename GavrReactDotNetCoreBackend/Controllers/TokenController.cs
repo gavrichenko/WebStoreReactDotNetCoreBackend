@@ -31,7 +31,6 @@ namespace GavrReactDotNetCoreBackend.Controllers
         }
 
 
-        [Route("token")]
         [HttpPost]
         public async Task Token([FromBody]LoginModel model)
         {
