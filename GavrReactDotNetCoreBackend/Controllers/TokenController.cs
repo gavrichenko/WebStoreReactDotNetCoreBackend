@@ -60,7 +60,8 @@ namespace GavrReactDotNetCoreBackend.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                username = identity.Name // todo: add role to the token
+                username = identity.Name, // todo: add role to the token
+                //role = identity.RoleClaimType;
             };
 
             // сериализация ответа

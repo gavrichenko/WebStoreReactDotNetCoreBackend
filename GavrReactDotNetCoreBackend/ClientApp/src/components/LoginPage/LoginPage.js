@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getToken } from '../../AC';
+import { getToken } from "../../AC/userActions";
 import './LoginPage.css';
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
@@ -32,12 +32,14 @@ class LoginPage extends Component {
 
 		this.setState({ submitted: true });
 		const { username, password } = this.state;
-		const { dispatch } = this.props;
 		if (username && password) {
-			console.log(username, password)	
-			getToken({email: username, password})
-			//dispatch(userActions.login(username, password));
-		}
+			console.log(username, password)
+			getToken({ email: username, password })
+				.then((tokenData) => {
+					return localStorage.setItem('user', JSON.stringify(tokenData.responseAPI));
+				})
+				.catch(e => console.log(e))
+		};
 	}
 
 	//validateForm() {
@@ -55,6 +57,8 @@ class LoginPage extends Component {
 						  <Image src='/logo.png' /> Log-in to your account
 					  </Header>
 					  <Form size='large' onSubmit= { this.handleSubmit } >
+						  <h2>email6@asddsa.ru</h2>
+						  <h2>Pasdawq$2</h2>
 						  <Segment stacked>
 							  <Form.Input
 								  name="username"

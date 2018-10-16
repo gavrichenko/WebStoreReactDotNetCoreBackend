@@ -41,28 +41,20 @@ namespace GavrReactDotNetCoreBackend.Controllers
         //    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
         //    if (result.Succeeded)
         //    {
-        //        return this.Ok();
+        //        // проверяем, принадлежит ли URL приложению
+        //        if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+        //        {
+        //            return Redirect(model.ReturnUrl);
+        //        }
+        //        else
+        //        {
+        //            return this.Unauthorized();
+        //        }
         //    }
         //    else
         //    {
-        //        return this.Unauthorized();
+        //        return this.BadRequest();
         //    }
-            //if (result.Succeeded)
-            //{
-            //    // проверяем, принадлежит ли URL приложению
-            //    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-            //    {
-            //        return Redirect(model.ReturnUrl);
-            //    }
-            //    else
-            //    {
-            //        return RedirectToAction("Index", "Home");
-            //    }
-            //}
-            //else
-            //{
-            //    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-            //}          
         //}
     }
 }
