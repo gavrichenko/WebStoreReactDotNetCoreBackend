@@ -19,6 +19,29 @@ namespace GavrReactDotNetCoreBackend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("GavrReactDotNetCoreBackend.Models.CustomerModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Birthday");
+
+                    b.Property<string>("Gender");
+
+                    b.Property<string>("IdentityId");
+
+                    b.Property<string>("Location");
+
+                    b.Property<int>("Phone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdentityId");
+
+                    b.ToTable("Customers");
+                });
+
             modelBuilder.Entity("GavrReactDotNetCoreBackend.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -57,7 +80,7 @@ namespace GavrReactDotNetCoreBackend.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.Property<int>("Year");
+                    b.Property<int>("testProp");
 
                     b.HasKey("Id");
 
@@ -180,6 +203,13 @@ namespace GavrReactDotNetCoreBackend.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("GavrReactDotNetCoreBackend.Models.CustomerModel", b =>
+                {
+                    b.HasOne("GavrReactDotNetCoreBackend.Models.User", "Identity")
+                        .WithMany()
+                        .HasForeignKey("IdentityId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

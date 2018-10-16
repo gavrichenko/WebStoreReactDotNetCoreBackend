@@ -22,13 +22,15 @@ namespace GavrReactDotNetCoreBackend.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody]RegisterModel model)
         {           
-            User user = new User { Email = model.Email, UserName = model.Email };
-            // добавляем пользователя
+            var user = new User { Email = model.Email, UserName = model.Email };
+            // creating user          
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
+                // set "user" role by default
+                await this._userManager.AddToRoleAsync(user, "user");
                 var response = new { user.Id, user.UserName };
-                return Ok(response);
+                return this.Ok(response);
             }
             return this.BadRequest();
         }

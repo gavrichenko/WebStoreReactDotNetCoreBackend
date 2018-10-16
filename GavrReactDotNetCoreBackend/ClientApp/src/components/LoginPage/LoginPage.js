@@ -57,8 +57,8 @@ class LoginPage extends Component {
 						  <Image src='/logo.png' /> Log-in to your account
 					  </Header>
 					  <Form size='large' onSubmit= { this.handleSubmit } >
-						  <h2>email6@asddsa.ru</h2>
-						  <h2>Pasdawq$2</h2>
+						  <h2>admin@admin.com</h2>
+						  <h2>paswrd123</h2>
 						  <Segment stacked>
 							  <Form.Input
 								  name="username"

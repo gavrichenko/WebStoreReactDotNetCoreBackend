@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GavrReactDotNetCoreBackend.Auth;
+﻿using GavrReactDotNetCoreBackend.Auth;
 using GavrReactDotNetCoreBackend.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.Collections.Generic;
 
 namespace GavrReactDotNetCoreBackend
 {
@@ -28,9 +28,20 @@ namespace GavrReactDotNetCoreBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("https://gavrichenko.ru")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             // Add framework services.
             services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                b => b.MigrationsAssembly("GavrReactDotNetCoreBackend")));
 
             // add identity
             services.AddIdentity<User, IdentityRole>(opts =>
@@ -139,6 +150,7 @@ namespace GavrReactDotNetCoreBackend
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseCors("default");
 
             app.UseAuthentication();
 
@@ -148,8 +160,6 @@ namespace GavrReactDotNetCoreBackend
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-
-
 
             app.UseSpa(spa =>
             {

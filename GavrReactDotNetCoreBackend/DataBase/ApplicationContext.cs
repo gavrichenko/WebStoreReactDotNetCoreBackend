@@ -9,5 +9,7 @@ namespace GavrReactDotNetCoreBackend.Models
             : base(options)
         {
         }
+
+        public DbSet<CustomerModel> Customers { get; set; }
     }
 }

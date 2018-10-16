@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GavrReactDotNetCoreBackend.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20181012125947_Initial")]
-    partial class Initial
+    [Migration("20181016145844_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,29 @@ namespace GavrReactDotNetCoreBackend.Migrations
                 .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("GavrReactDotNetCoreBackend.Models.CustomerModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Birthday");
+
+                    b.Property<string>("Gender");
+
+                    b.Property<string>("IdentityId");
+
+                    b.Property<string>("Location");
+
+                    b.Property<int>("Phone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdentityId");
+
+                    b.ToTable("Customers");
+                });
 
             modelBuilder.Entity("GavrReactDotNetCoreBackend.Models.User", b =>
                 {
@@ -59,7 +82,7 @@ namespace GavrReactDotNetCoreBackend.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.Property<int>("Year");
+                    b.Property<int>("testProp");
 
                     b.HasKey("Id");
 
@@ -182,6 +205,13 @@ namespace GavrReactDotNetCoreBackend.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("GavrReactDotNetCoreBackend.Models.CustomerModel", b =>
+                {
+                    b.HasOne("GavrReactDotNetCoreBackend.Models.User", "Identity")
+                        .WithMany()
+                        .HasForeignKey("IdentityId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
