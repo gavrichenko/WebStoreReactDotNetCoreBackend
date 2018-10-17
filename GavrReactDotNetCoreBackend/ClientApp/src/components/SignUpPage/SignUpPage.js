@@ -6,8 +6,8 @@ import { Button, Form, Grid, Header, Message, Segment, Icon, Loader } from 'sema
 import { withRouter } from 'react-router-dom';
 
 class SignUpPage extends Component {
-	constructor(props, context) {
-		super(props, context);
+	constructor(props) {
+		super(props);
 
 		this.state = {
 			firstName: '',
@@ -47,7 +47,7 @@ class SignUpPage extends Component {
 
 	render() {
 	  const { loggingIn } = this.props;
-		const { email, firstName, lastName, password, submitted, isLoaded } = this.state;
+	  const { email, firstName, lastName, password, submitted, isLoaded } = this.state;
 	  return (
 		  <div className='login-form'>
 			  <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
@@ -56,7 +56,9 @@ class SignUpPage extends Component {
 	                     <Icon name='settings' />Регистрация на сайте
 					  </Header>
 					  <Form size='large' onSubmit={this.handleSubmit} >
+
 						  <Loader active={isLoaded} size='big' />
+
 						  <Segment stacked>
 							  <Form.Input
 								  name="firstName"

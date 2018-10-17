@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import { Menu, Icon } from 'semantic-ui-react'
+import { Menu, Icon, Dropdown } from 'semantic-ui-react'
+import UserMenu from "../UserMenu/UserMenu";
 import './Header.css'
 
 
@@ -13,17 +14,20 @@ class Header extends Component {
     const { activeItem } = this.state;
 
     return (
-      <header className="header">
+      <header className="header" >
         <Menu stackable>
 
-          <Link to="/" className ="header__link">
-            <Menu.Item>
+          <Link to="/" >
+				<Menu.Item
+					name='logo'
+					onClick={this.handleItemClick}
+				>
               <img src={require('../../static/ico/flowers.png')} />
               <span className="nameOfLogo"><p>lovely-house</p></span>
             </Menu.Item>
           </Link>
 
-          <Link  to="/promotion" className ="header__link">
+          <Link  to="/promotion" >
             <Menu.Item
               name='promo'
               active={activeItem === 'promo'}
@@ -33,17 +37,17 @@ class Header extends Component {
             </Menu.Item>
           </Link>
 
-          <Link to="/contacts" className ="header__link">
+          <Link to="/contacts" >
             <Menu.Item
-              name='contacts'
-              active={activeItem === 'contacts'}
-              onClick={this.handleItemClick}
-            >
+				name='contacts'
+				active={activeItem === 'contacts'}
+				onClick={this.handleItemClick}
+			>
               Контакты
             </Menu.Item>
           </Link>
 
-          <Link to="/shop" className ="header__link">
+          <Link to="/shop" >
             <Menu.Item className ="header__link"
               name='shop'
               active={activeItem === 'shop'}
@@ -54,7 +58,7 @@ class Header extends Component {
 
           {/*right menu*/}
           <Menu.Menu position='right'>
-            <Link to="/basket" className ="header__link">
+            <Link to="/basket" >
               <Menu.Item
                 icon = 'shop'
                 name='Корзина'
@@ -65,14 +69,23 @@ class Header extends Component {
               </Menu.Item>
             </Link>
 
-            <Link to="/login" className ="header__link">
-              <Menu.Item
-                icon = 'key'
-                name='Войти'
-                active={activeItem === 'Войти'}
-                onClick={this.handleItemClick}
-              />
-            </Link>
+			<div hidden={false}  >
+				<Link to="/login" >
+	              <Menu.Item icon = 'key'
+	                name='Войти'
+	                onClick={this.handleItemClick}
+				  />				
+				</Link>
+			</div>
+
+			<div hidden={true}  >
+				<Menu.Item 
+					name='userMenu'
+					onClick={this.handleItemClick} >
+					<UserMenu />
+				</Menu.Item>
+			</div>
+			
           </Menu.Menu>
 
         </Menu>

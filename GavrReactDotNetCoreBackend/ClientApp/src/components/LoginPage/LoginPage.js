@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { getToken } from "../../AC/userActions";
 import './LoginPage.css';
-import { Button, Form, Grid, Header, Image, Message, Segment, Icon } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Loader, Message, Segment, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import * as qs from 'query-string';
 
@@ -17,7 +17,8 @@ class LoginPage extends Component {
 		this.state = {
 			username: queryFromUrl.email,
 			password: '',
-			submitted: false
+			submitted: false,
+			isLoaded: false,
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -36,9 +37,16 @@ class LoginPage extends Component {
 		this.setState({ submitted: true });
 		const { username, password } = this.state;
 		if (username && password) {
+			this.setState({ isLoaded: true });
 			getToken({ email: username, password })
 				.then((tokenData) => {
-					return localStorage.setItem('user', JSON.stringify(tokenData.responseAPI));
+					localStorage.setItem('user', JSON.stringify(tokenData.responseAPI));
+					return tokenData;
+				})
+				.then((responseData) => {
+					console.log(responseData);
+					this.setState({ isLoaded: false, password: '' });
+					this.props.history.push(`/login?email=${responseData.responseAPI.userName}`);
 				})
 				.catch(e => console.log(e))
 		};
@@ -50,12 +58,14 @@ class LoginPage extends Component {
 
 	render() {
 	  const { loggingIn } = this.props;
-	  const { username, password, submitted } = this.state;
+		const { username, password, isLoaded, submitted } = this.state;
 	  return (
 		  <div className='login-form'>
-			  <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
-
+			  <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>			 
 				  <Grid.Column style={{ maxWidth: 450 }}>
+
+					  <Loader active={isLoaded} size='big' />
+
 					  <Header as='h2' color='teal' textAlign='center'>
 						  <Icon name='sign-in' />Войти в свой аккаунт
 					  </Header>
@@ -63,6 +73,13 @@ class LoginPage extends Component {
 
 						  <h3>admin@admin.com</h3>
 						  <h3>paswrd123</h3>
+
+						  <div>
+							  <small>You are running this application in <b>{process.env.NODE_ENV}</b> mode.</small>
+							  <form>
+								  <input type="hidden" defaultValue={process.env.REACT_APP_SECRET_CODE} />
+							  </form>
+						  </div>
 
 						  <Segment stacked>
 							  <Form.Input

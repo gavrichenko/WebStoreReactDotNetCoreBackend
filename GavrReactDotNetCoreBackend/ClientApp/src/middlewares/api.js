@@ -1,11 +1,11 @@
 import axios from 'axios';
-
 import {START, SUCCESS, FAIL} from "../constance";
 
-//hardcoded api's path here
+const UrlByEnv = process.env.NODE_ENV == "development" ? "https://localhost:44393/" : "https://gavrichenko.ru/";
+// hardcoded api's path here
 const axiosInstance = axios.create({
-  // baseURL: `https://salty-ridge-37026.herokuapp.com/`
-	baseURL: `https://localhost:44393/`
+    // baseURL: `https://salty-ridge-37026.herokuapp.com/`
+	baseURL: UrlByEnv,
 });
 
 export default store => next => action => {
