@@ -8,6 +8,8 @@ using GavrReactDotNetCoreBackend.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -27,7 +29,8 @@ namespace GavrReactDotNetCoreBackend
                 {
                     var userManager = services.GetRequiredService<UserManager<User>>();
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await DbInitializer.InitializeAsync(userManager, rolesManager);
+                    var dbContext = services.GetRequiredService<ApplicationContext>();
+                    await DbInitializer.InitializeAsync(userManager, rolesManager, dbContext);
                 }
                 catch (Exception ex)
                 {
