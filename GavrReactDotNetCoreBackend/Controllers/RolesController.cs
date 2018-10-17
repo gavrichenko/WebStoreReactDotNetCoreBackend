@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GavrReactDotNetCoreBackend.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     public class RolesController : Controller
     {

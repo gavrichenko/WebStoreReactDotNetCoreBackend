@@ -59,9 +59,8 @@ namespace GavrReactDotNetCoreBackend.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                username = identity.Name, // todo: add role to the token
-                //role = identity.RoleClaimType;
-            };
+                username = identity.Name,
+        };
 
             // сериализация ответа
             Response.ContentType = "application/json";
@@ -71,13 +70,13 @@ namespace GavrReactDotNetCoreBackend.Controllers
         private async Task<ClaimsIdentity> GetIdentity(string userName, string password)
         {
             var user = await this._userManager.FindByNameAsync(userName);
-            var isCorrectPassword = _signInManager.CheckPasswordSignInAsync(user, password, false);
-            if (isCorrectPassword.IsCompletedSuccessfully)
+            var isCorrectPassword = _signInManager.UserManager.CheckPasswordAsync(user, password);
+            if (isCorrectPassword.Result)
             {
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, "user") // todo: доделать роли
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, "user") 
                 };
                 ClaimsIdentity claimsIdentity =
                     new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,

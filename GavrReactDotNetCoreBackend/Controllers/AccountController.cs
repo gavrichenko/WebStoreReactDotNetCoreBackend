@@ -11,11 +11,13 @@ namespace GavrReactDotNetCoreBackend.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly ApplicationContext _appDbContext;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ApplicationContext appDbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _appDbContext = appDbContext;
         }
 
         [Route("register")]
@@ -30,33 +32,13 @@ namespace GavrReactDotNetCoreBackend.Controllers
                 // set "user" role by default
                 await this._userManager.AddToRoleAsync(user, "user");
                 var response = new { user.Id, user.UserName };
+
+                await _appDbContext.Customers.AddAsync(new CustomerModel { IdentityId = user.Id, FirstName = model.FirstName, LastName = model.LastName});
+                await _appDbContext.SaveChangesAsync();
+
                 return this.Ok(response);
             }
             return this.BadRequest();
         }
-
-        //[Route("login")]
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Login([FromBody]LoginModel model)
-        //{
-        //    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-        //    if (result.Succeeded)
-        //    {
-        //        // проверяем, принадлежит ли URL приложению
-        //        if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-        //        {
-        //            return Redirect(model.ReturnUrl);
-        //        }
-        //        else
-        //        {
-        //            return this.Unauthorized();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return this.BadRequest();
-        //    }
-        //}
     }
 }
