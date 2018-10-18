@@ -27,6 +27,11 @@ class UserMenu extends Component {
 		this.props.history.push(value);
 	};
 
+	handleSignOut = () => {
+		localStorage.removeItem('user');
+		this.props.history.push('/login');
+	};
+
 	getAdminButton() {
 		const { roles } = this.props;
 		var isAdmin = roles.some(role => role === 'admin');
@@ -50,7 +55,7 @@ class UserMenu extends Component {
 				<Dropdown.Item text='Личный кабинет' value='/profile' onClick={this.handleClick} />
 				<Dropdown.Item text='Корзина' value='/cart' onClick={this.handleClick}/>
 				<Dropdown.Item text='Помощь' value='/help' onClick={this.handleClick}/>
-				<Dropdown.Item text='Выйти' value='/signout' onClick={this.handleClick} />
+				<Dropdown.Item text='Выйти' value='/signout' onClick={this.handleSignOut} />
 				<Dropdown.Divider />
 			    {this.getAdminButton()}
 			</Dropdown.Menu>

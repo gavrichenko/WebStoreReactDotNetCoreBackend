@@ -6,7 +6,7 @@ namespace GavrReactDotNetCoreBackend.Auth
     public class AuthOptions
     {
         public const string ISSUER = "MyAuthServer"; // издатель токена
-        public const string AUDIENCE = "https://localhost:5001/"; // потребитель токена
+        public const string AUDIENCE = "https://localhost:44393/"; // потребитель токена
         const string KEY = "mysupersecret_secretkey!123";   // ключ для шифрации
         public const int LIFETIME = 100; // время жизни токена - 1 минута
         public static SymmetricSecurityKey GetSymmetricSecurityKey()

@@ -20,6 +20,21 @@ namespace GavrReactDotNetCoreBackend.Controllers
             _appDbContext = appDbContext;
         }
 
+        [Route("logout")]
+        [HttpPost]
+        public async Task<IActionResult> Logout(string userName)
+        {
+            var user = await this._userManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                return this.BadRequest("User was not found");
+            }
+            var result = await _userManager.UpdateSecurityStampAsync(user);
+            return this.Ok(result);
+
+
+        }
+
         [Route("register")]
         [HttpPost]
         public async Task<IActionResult> Register([FromBody]RegisterModel model)
