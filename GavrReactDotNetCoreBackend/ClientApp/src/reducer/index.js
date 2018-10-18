@@ -3,12 +3,12 @@ import counterReducer from './counter';
 import articlesReducer from './articles';
 import filterReducer from './filters';
 import flowersReduser from './flowers';
-import usersReduser from "./users";
+import userReduser from "./user";
 
 export default combineReducers({
   count: counterReducer,
   articles: articlesReducer,
   filters: filterReducer,
   flowers: flowersReduser,
-  users: usersReduser,
+  userInfo: userReduser,
 });

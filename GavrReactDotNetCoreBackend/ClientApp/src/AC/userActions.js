@@ -1,4 +1,4 @@
-import {GET_TOKEN, SIGN_UP} from "../constance";
+import { GET_TOKEN, SIGN_UP, GET_USER_INFO} from "../constance";
 
 export function getToken(data) {
 	return {
@@ -15,5 +15,14 @@ export function signUp(data) {
 		callAPI: 'api/account/register',
 		typeOfMethod: 'post',
 		apiData: { data }
+	}
+}
+
+export function getUserInfo(userName) {
+	return {
+		type: GET_USER_INFO,
+		callAPI: `api/customer?userName=${userName}`,
+		isAuthorize: true,
+		typeOfMethod: 'get',
 	}
 }

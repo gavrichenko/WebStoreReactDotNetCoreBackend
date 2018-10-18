@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import { Menu, Icon, Dropdown } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu, Icon } from 'semantic-ui-react'
 import UserMenu from "../UserMenu/UserMenu";
 import './Header.css'
 
@@ -10,10 +10,19 @@ class Header extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
+  isAuthenticated() {
+	  const isAuthCookieExist = localStorage.getItem('user') !== null ? true : false;
+	  if (isAuthCookieExist) {
+		  return true;
+	  }
+	  return false;
+  };
+
   render() {
     const { activeItem } = this.state;
 
     return (
+
       <header className="header" >
         <Menu stackable>
 
@@ -69,7 +78,7 @@ class Header extends Component {
               </Menu.Item>
             </Link>
 
-			<div hidden={false}  >
+			<div hidden={this.isAuthenticated()}  >
 				<Link to="/login" >
 	              <Menu.Item icon = 'key'
 	                name='Войти'
@@ -78,7 +87,7 @@ class Header extends Component {
 				</Link>
 			</div>
 
-			<div hidden={true}  >
+			<div hidden={!this.isAuthenticated()}  >
 				<Menu.Item 
 					name='userMenu'
 					onClick={this.handleItemClick} >
@@ -94,4 +103,4 @@ class Header extends Component {
   }
 }
 
-export default Header
+export default Header;

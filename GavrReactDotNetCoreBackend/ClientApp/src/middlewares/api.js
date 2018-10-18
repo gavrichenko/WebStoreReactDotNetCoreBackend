@@ -3,20 +3,27 @@ import {START, SUCCESS, FAIL} from "../constance";
 
 const UrlByEnv = process.env.NODE_ENV == "development" ? "https://localhost:44393/" : "https://gavrichenko.ru/";
 // hardcoded api's path here
+
 const axiosInstance = axios.create({
     // baseURL: `https://salty-ridge-37026.herokuapp.com/`
 	baseURL: UrlByEnv,
 });
 
 export default store => next => action => {
-  const {type, callAPI, typeOfMethod, apiData, ...rest} = action;
+	const { type, callAPI, typeOfMethod, isAuthorize, apiData, ...rest} = action;
 
 
   //  if callAPI param isn't exist nothing will happen...
   if (!callAPI) return next(action);
   next({
     ...rest, type: type + START
-  });
+	});
+
+	// in case when auth required
+	if (isAuthorize) {
+		const token = localStorage.getItem('user') !== null ? `Bearer ${JSON.parse(localStorage.getItem('user')).access_token}` : null;
+		axiosInstance.defaults.headers.common['Authorization'] = token;
+	}
 
   // on another case i'll call to the API
   switch (typeOfMethod) {

@@ -14,6 +14,9 @@ export const GET_TOKEN = 'GET_TOKEN';
 // register
 export const SIGN_UP = 'SIGN_UP';
 
+// user
+export const GET_USER_INFO = 'GET_USER_INFO';
+
 // for loader component
 export const START = '_START';
 export const SUCCESS = '_SUCCESS';

@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getToken } from "../../AC/userActions";
+import { getToken, getUserInfo } from "../../AC/userActions";
+import { GET_TOKEN, SUCCESS } from "../../constance";
 import './LoginPage.css';
 import { Button, Form, Grid, Header, Loader, Message, Segment, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
@@ -10,8 +11,7 @@ class LoginPage extends Component {
 	constructor(props) {
 		super(props);
 
-		// reset login status
-		//this.props.dispatch(userActions.logout());
+		// fetching user data(email) from url
 		const queryFromUrl = qs.parse(window.location.search);
 
 		this.state = {
@@ -32,7 +32,7 @@ class LoginPage extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		const { getToken } = this.props;
+		const { getToken, getUserInfo } = this.props;
 
 		this.setState({ submitted: true });
 		const { username, password } = this.state;
@@ -40,15 +40,21 @@ class LoginPage extends Component {
 			this.setState({ isLoaded: true });
 			getToken({ email: username, password })
 				.then((tokenData) => {
-					localStorage.setItem('user', JSON.stringify(tokenData.responseAPI));
-					return tokenData;
-				})
-				.then((responseData) => {
-					console.log(responseData);
 					this.setState({ isLoaded: false, password: '' });
-					this.props.history.push(`/login?email=${responseData.responseAPI.userName}`);
+					if (tokenData.type === GET_TOKEN + SUCCESS) {
+						localStorage.setItem('user', JSON.stringify(tokenData.responseAPI));
+						return tokenData;
+					} else {
+						// todo: add modal window with error
+						return Promise.reject('auth issue');
+					}
 				})
-				.catch(e => console.log(e))
+				.then((tokenData) => {
+					const username = tokenData.responseAPI.username;
+					getUserInfo(username)
+					this.props.history.push('/');
+				})
+				.catch(e => console.log(e));
 		};
 	}
 
@@ -58,7 +64,7 @@ class LoginPage extends Component {
 
 	render() {
 	  const { loggingIn } = this.props;
-		const { username, password, isLoaded, submitted } = this.state;
+		const { username, password, isLoaded } = this.state;
 	  return (
 		  <div className='login-form'>
 			  <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>			 
@@ -115,4 +121,4 @@ class LoginPage extends Component {
   }
 
 }
-export default connect(null, { getToken })(LoginPage);
+export default connect(null, { getToken, getUserInfo })(LoginPage);

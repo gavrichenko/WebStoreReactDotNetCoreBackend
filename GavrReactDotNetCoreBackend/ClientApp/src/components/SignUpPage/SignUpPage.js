@@ -37,7 +37,6 @@ class SignUpPage extends Component {
 			this.setState({isLoaded: true});
 			signUp({ firstName, lastName, email, password })
 				.then((responseData) => {
-					console.log(responseData);
 					this.setState({ isLoaded: false, password: '' });
 					this.props.history.push(`/login?email=${responseData.responseAPI.userName}`);
 				})
