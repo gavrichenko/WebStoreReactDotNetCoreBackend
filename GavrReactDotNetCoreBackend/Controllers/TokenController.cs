@@ -30,8 +30,8 @@ namespace GavrReactDotNetCoreBackend.Controllers
             _signInManager = signInManager;
         }
 
-
         [HttpPost]
+       // [ValidateAntiForgeryToken]
         public async Task Token([FromBody]LoginModel model)
         {
             var username = model.Email;

@@ -21,6 +21,20 @@ namespace GavrReactDotNetCoreBackend.Controllers
             _userManager = userManager;
         }
 
+        [Route("getRoleByUserName")]
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetRoleByUserName(string userName)
+        {
+            var user = await this._userManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                return this.BadRequest("User was not found");
+            }
+            var role = await this._userManager.GetRolesAsync(user);
+            return this.Ok(role);
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
