@@ -1,0 +1,14 @@
+.accountContainer {
+	display: flex;
+}
+
+.infoContainer {
+	padding: 20px 20px;
+}
+
+@media (max-width: 800px) {
+	.accountContainer {
+		display: flex;
+		flex-direction: column;
+	}
+}

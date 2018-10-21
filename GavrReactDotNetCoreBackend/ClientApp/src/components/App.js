@@ -6,6 +6,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import LoginPage from "./LoginPage/LoginPage";
 import SignUpPage from "./SignUpPage/SignUpPage";
+import AccountPage from "./AccountPage/AccountPage";
 import ContentWrapper from './ContentWrapper/ContentWrapper';
 import GeneralLanding from './GeneralLanding/GeneralLanding';
 import ContactsPage from './ContactsPage/ContactsPage';
@@ -26,6 +27,7 @@ class App extends Component {
             <Route path="/shop" component={ShopPage} />
 			<Route path="/login" component={LoginPage} />
 			<Route path="/signup" component={SignUpPage} />
+			<Route path="/account" component={AccountPage} />
             {/*only for admin*/}
             <Route path="/admin" component={AdminPage} />
           </ContentWrapper>

@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { getUserInfo } from "../../AC/userActions";
 import { getUserRole } from "../../AC/rolesActions";
-import { Icon, Dropdown } from 'semantic-ui-react'
+import { Icon, Dropdown, Confirm } from 'semantic-ui-react'
 import { withRouter } from "react-router-dom";
 import './UserMenu.css'
 
@@ -10,7 +10,7 @@ import './UserMenu.css'
 class UserMenu extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};	
+		this.state = { open: false };	
 	};
 
 	componentDidMount() {
@@ -27,10 +27,15 @@ class UserMenu extends Component {
 		this.props.history.push(value);
 	};
 
+	handleOpenModal = () => this.setState({ open: true })
+
 	handleSignOut = () => {
+		this.setState({ open: false })
 		localStorage.removeItem('user');
 		this.props.history.push('/login');
 	};
+
+	handleCancel = () => this.setState({ open: false })
 
 	getAdminButton() {
 		const { roles } = this.props;
@@ -48,18 +53,30 @@ class UserMenu extends Component {
 		const loggedAs = (<span>Вы зашли как <strong>{firstName} {lastName}</strong></span>);
 		const { value } = this.state;
 
-		return(
-			<Dropdown text={welcome} >
-			<Dropdown.Menu>
-				<Dropdown.Item text= { loggedAs } disabled />
-				<Dropdown.Item text='Личный кабинет' value='/profile' onClick={this.handleClick} />
-				<Dropdown.Item text='Корзина' value='/cart' onClick={this.handleClick}/>
-				<Dropdown.Item text='Помощь' value='/help' onClick={this.handleClick}/>
-				<Dropdown.Item text='Выйти' value='/signout' onClick={this.handleSignOut} />
-				<Dropdown.Divider />
-			    {this.getAdminButton()}
-			</Dropdown.Menu>
-		</Dropdown>
+		return (
+			<div className='userMenuDropdown'>
+				<Dropdown text={welcome} >
+					<Dropdown.Menu>
+						<Dropdown.Item text= { loggedAs } disabled />
+						<Dropdown.Item text='Личный кабинет' value='/account' onClick={this.handleClick} />
+						<Dropdown.Item text='Корзина' value='/cart' onClick={this.handleClick}/>
+						<Dropdown.Item text='Помощь' value='/help' onClick={this.handleClick}/>
+						<Dropdown.Item text='Выйти' value='/signout' onClick={this.handleOpenModal} />
+						<Dropdown.Divider />
+					    {this.getAdminButton()}
+					</Dropdown.Menu>
+				</Dropdown>
+				<Confirm
+					header='Вы собираетесь покинуть сайт'
+					content='Вы уверены?'
+					open={this.state.open}
+					onCancel={this.handleCancel}
+					onConfirm={this.handleSignOut}
+					confirmButton='Выйти'
+					cancelButton='Отмена'
+					size='tiny'
+				/>
+			</div>
 		)	
 	};
 };

@@ -111,7 +111,8 @@ class LoginPage extends Component {
 							  </Button>
 						  </Segment>
 					  </Form>
-					  <Message>
+					  <Message attached='bottom' warning>
+						  <Icon name='help' />
 						  <Link to="/signup">Ещё не зарегистрированы?</Link>  						
 					  </Message>
 				  </Grid.Column>

@@ -1,0 +1,15 @@
+
+.userDataContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+.userDataContainer .input {
+	margin-bottom: 10px;
+}
+
+.userDataContainer input:disabled {
+	color: black;
+	opacity: 1;
+	font-weight: bold;
+}

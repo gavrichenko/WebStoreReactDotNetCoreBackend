@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GavrReactDotNetCoreBackend.Controllers
 {
-    [Authorize(Roles = "admin, user")]
+    //[Authorize(Roles = "admin, user")]
     [Route("api/[controller]")]
     public class CustomerController : Controller
     {
