@@ -1,4 +1,4 @@
-import { SUCCESS, FAIL, GET_TOKEN, GET_USER_INFO, GET_ROLE_BY_NAME } from "../constance";
+import { SUCCESS, FAIL, GET_TOKEN, GET_USER_INFO, GET_ROLE_BY_NAME, UPDATE_USER_INFO } from "../constance";
 
 const defaultState = {
 	isLoggedIn: false,
@@ -33,13 +33,17 @@ export default (userState = defaultState, action) => {
 		  lastName: responseAPI.lastName,
 		  birthday: responseAPI.birthday,
 		  gender: responseAPI.gender,
-		  location: responseAPI.location,
+		  city: responseAPI.city,
 		  phone: responseAPI.phone
 	  };
 
 	  case GET_ROLE_BY_NAME + SUCCESS: return {
 		  ...userState,
 		  roles: responseAPI,
+	  };
+
+	  case UPDATE_USER_INFO + SUCCESS: return {
+		  ...userState,
 	  };
   }
   return userState;

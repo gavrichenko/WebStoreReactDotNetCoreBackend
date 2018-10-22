@@ -4,14 +4,16 @@ using GavrReactDotNetCoreBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GavrReactDotNetCoreBackend.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20181022124703_ChangeTypeOfPhone")]
+    partial class ChangeTypeOfPhone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,8 +29,6 @@ namespace GavrReactDotNetCoreBackend.Migrations
 
                     b.Property<DateTime?>("Birthday");
 
-                    b.Property<string>("City");
-
                     b.Property<string>("FirstName");
 
                     b.Property<string>("Gender");
@@ -36,6 +36,8 @@ namespace GavrReactDotNetCoreBackend.Migrations
                     b.Property<string>("IdentityId");
 
                     b.Property<string>("LastName");
+
+                    b.Property<string>("Location");
 
                     b.Property<string>("Phone");
 

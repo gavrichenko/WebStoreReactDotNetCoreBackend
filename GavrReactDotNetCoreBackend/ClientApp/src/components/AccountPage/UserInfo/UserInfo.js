@@ -1,76 +1,94 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUserInfo } from "../../../AC/userActions";
-import { getUserRole } from "../../../AC/rolesActions";
-import { Button, Icon, Input, Message } from 'semantic-ui-react'
+import { getUserInfo, updateUserInfo } from "../../../AC/userActions";
+import { Button, Loader, Input } from 'semantic-ui-react'
 import { withRouter } from "react-router-dom";
 import './UserInfo.css'
-
 
 class UserInfo extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { editMode: false };
+		this.state = {
+			isLoaded: false,
+			isDisabled: true,
+		};
 	};
 
-	componentDidMount() { };
-
-	handleItemClick = (e, { name }) => this.setState({ editMode: !this.state.editMode });
-	handleChange = (e, { name }) => {
-
-	}
-	handleChange(event) {
-		this.setState({ value: event.target.value });
-	}
-
-	getEditMode() {
-		return(
-				<div className='userDataContainer'>
-					<Input  value='Илья' placeholder='Имя' label={{ icon: 'asterisk' }} labelPosition='left corner' />
-					<Input disabled  defaultValue='Гавриченко' placeholder='Фамилия' />
-					<Input  placeholder='E-mail' label={{ icon: 'asterisk' }} labelPosition='left corner' />
-				 
-					<Input placeholder='Телефон' iconPosition='left'>
-						<Icon name='phone' />
-						<input />
-					</Input>
-
-					<Input value='Ярославль' placeholder='Город' iconPosition='left'>
-
-						<Icon name='home' />
-						<input />
-					</Input>
-
-					<Button type='submit'>Submit</Button>
-				</div>
-			);
+	componentDidMount() {
+		const username = localStorage.getItem('user') !== null ? JSON.parse(localStorage.getItem('user')).username : null;
+		if (username !== null) {
+			const { getUserInfo } = this.props;
+			this.setState({ isLoaded: true });
+			getUserInfo(username)
+				.then(() => this.setState({ isLoaded: false, username }));
+		}
 	};
 
-	getReadMode() {
+	handleToggleDisabled = () => this.setState({ isDisabled: !this.state.isDisabled });
+
+	handleChange = (e) => {
+		const { name, value, defaultValue } = e.target;
+		if (value !== defaultValue) {
+			console.log(`${name} was changed`); // todo: add case when input have changes
+		}
+		this.setState({ [name]: value });
+	};
+
+
+	handleSubmit = () => {
+		const { updateUserInfo, email } = this.props;
+		const { firstName, lastName, birthday, city, gender, phone } = this.state;
+		this.setState({ isLoaded: true });
+		const objectToSend = { firstName, lastName, birthday, city, gender, phone };
+		const mapKey = (obj) => {
+			Object.keys(obj).forEach(key => {
+				if (obj[key] === undefined) {
+					obj[key] = this.props[key];
+				}
+			});
+			return obj;
+		};
+		mapKey(objectToSend);
+		updateUserInfo(email, objectToSend)
+			.then(() => this.setState({ isDisabled: true, isLoaded: false }))
+	};
+
+	getReadModeButton() {
+		return (
+			<Button type='submit' onClick={this.handleToggleDisabled}>Редактировать </Button>
+		);
+	};
+
+	getEditModeButton() {
 		return (
 			<div>
-				<h1>Read Mode</h1>
-				<Message header='Имя'content='Илья'/>
-				<Message header='Фамилия'content='Гавриченко'/>
-
-
-				<Button onClick={this.handleItemClick} >Edit</Button>
+				<Button type='submit' onClick={this.handleSubmit}>Изменить </Button>
+				<Button type='submit' onClick={this.handleToggleDisabled}>Отмена </Button>
 			</div>
 		);
 	};
 
 	render() {
-		const { editMode } = this.state;
+		const { firstName, lastName, email, birthday, city, gender, phone } = this.props;
+		const { isDisabled, isLoaded } = this.state;
 
 		return (
-
-			<div>
-				{!editMode ? (
-					 this.getEditMode()
+			<div className='userDataContainer'>
+				<Loader active={isLoaded} size='big' />
+				<Input name='firstName' disabled={isDisabled} defaultValue={firstName} onChange={this.handleChange} placeholder='Имя' />
+				<Input name='lastName' disabled={isDisabled} defaultValue={lastName} onChange={this.handleChange} placeholder='Фамилия' />
+				<Input name='email' disabled={isDisabled} defaultValue={email} onChange={this.handleChange} placeholder='E-mail' icon='mail' iconPosition='left' />
+				<Input name='birthday' disabled={isDisabled} defaultValue={birthday} onChange={this.handleChange} placeholder='День рождения' icon='birthday' iconPosition='left' />
+				<Input name='phone' disabled={isDisabled} defaultValue={phone} onChange={this.handleChange} placeholder='Телефон' icon='phone' iconPosition='left' />
+				<Input name='gender' disabled={isDisabled} defaultValue={gender} onChange={this.handleChange} placeholder='Пол' icon='man' iconPosition='left' />
+				<Input name='city' disabled={isDisabled} defaultValue={city} onChange={this.handleChange} placeholder='Город' icon='home' iconPosition='left' />
+				
+				{!isDisabled ? (
+					this.getEditModeButton()
 				) : (
-					this.getReadMode()
+					this.getReadModeButton()
 					)}
-			</div>
+			</div>		
 		)	
 	};
 };
@@ -79,6 +97,10 @@ export default connect((state) => {
 	return {
 		firstName: state.userInfo.firstName,
 		lastName: state.userInfo.lastName,
-		roles: state.userInfo.roles,
+		email: state.userInfo.email,
+		birthday: state.userInfo.birthday,
+		city: state.userInfo.city,
+		gender: state.userInfo.gender,
+		phone: state.userInfo.phone,
 	}
-}, { getUserInfo, getUserRole })(withRouter(UserInfo));
+}, { getUserInfo, updateUserInfo })(withRouter(UserInfo));

@@ -37,8 +37,8 @@ namespace GavrReactDotNetCoreBackend.DataBase
                         FirstName = "Ilya",
                         LastName = "GavrAdmin",
                         Gender = "male",
-                        Location = "rus",
-                        Phone =  89605459169 as int?,
+                        City = "Moscow",
+                        Phone =  "88002000500",
                         
                     };
                     await appDbContext.Customers.AddAsync(new CustomerModel
@@ -48,7 +48,7 @@ namespace GavrReactDotNetCoreBackend.DataBase
                         FirstName = _c.FirstName,
                         LastName = _c.LastName,
                         Gender = _c.Gender,
-                        Location = _c.Location,
+                        City = _c.City,
                         Phone = _c.Phone
                     });
                     await appDbContext.SaveChangesAsync();

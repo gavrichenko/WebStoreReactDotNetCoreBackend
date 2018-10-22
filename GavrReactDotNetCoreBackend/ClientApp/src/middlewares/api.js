@@ -37,7 +37,18 @@ export default store => next => action => {
           return res.data;
         })
         .then(responseAPI => next({...rest, type: type + SUCCESS, responseAPI}))
-        .catch(error => next({...rest, type: type + FAIL, error}));
+			  .catch(error => next({ ...rest, type: type + FAIL, error }));
+    case 'put':
+	    console.log(`PUT REQUEST TO ${callAPI}`);
+	    const updatingData = apiData.data;
+
+		  return axiosInstance.put(callAPI, updatingData)
+		    .then(res => {
+			    console.log(`---- ${res.status} RESPONSE FROM BD: ${JSON.stringify(res.data)}`);
+			    return res.data;
+		    })
+		    .then(responseAPI => next({ ...rest, type: type + SUCCESS, responseAPI }))
+		    .catch(error => next({ ...rest, type: type + FAIL, error }));
     default:
       console.log(`GET REQUEST TO ${callAPI}`);
       return axiosInstance(callAPI)

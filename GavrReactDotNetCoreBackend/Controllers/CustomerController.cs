@@ -37,11 +37,30 @@ namespace GavrReactDotNetCoreBackend.Controllers
                     customer.LastName,
                     customer.Birthday,
                     customer.Gender,
-                    customer.Location,
+                    customer.City,
                     customer.Phone
                 });
             }
             return this.BadRequest();
+        }
+
+        [Route("{userName}")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateCustomer([FromRoute] string userName,[FromBody]CustomerModel model)
+        {
+            var user = await this._userManager.FindByNameAsync(userName);
+            var customer = await _appDbContext.Customers.Include(c => c.Identity).SingleAsync(c => c.Identity.Id == user.Id);
+            if (model.FirstName == null || model.LastName == null) return this.BadRequest("The firstname and lastname is required");
+
+            customer.FirstName = model.FirstName;
+            customer.LastName = model.LastName;
+            customer.Birthday = model.Birthday;
+            customer.Gender = model.Gender;
+            customer.City = model.City;
+            customer.Phone = model.Phone;
+
+            await this._appDbContext.SaveChangesAsync();
+            return this.Ok(customer);
         }
     }
 }

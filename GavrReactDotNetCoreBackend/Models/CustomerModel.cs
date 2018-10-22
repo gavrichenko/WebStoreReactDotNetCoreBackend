@@ -12,8 +12,8 @@ namespace GavrReactDotNetCoreBackend.Models
         public User Identity { get; set; }  // navigation property
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Location { get; set; }
-        public int? Phone { get; set; }
+        public string City { get; set; }
+        public string Phone { get; set; }
         public DateTime? Birthday { get; set; }
         public string Gender { get; set; }
     }
