@@ -18,6 +18,7 @@ export const SIGN_UP = 'SIGN_UP';
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const GET_ROLE_BY_NAME = 'GET_ROLE_BY_NAME';
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
+export const GET_ALL_USERS = 'GET_ALL_USERS';
 
 // for loader component
 export const START = '_START';

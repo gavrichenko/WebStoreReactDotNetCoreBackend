@@ -62,7 +62,7 @@ class UserMenu extends Component {
 						<Dropdown.Item text='Корзина' value='/cart' onClick={this.handleClick}/>
 						<Dropdown.Item text='Помощь' value='/help' onClick={this.handleClick}/>
 						<Dropdown.Item text='Выйти' value='/signout' onClick={this.handleOpenModal} />
-						<Dropdown.Divider />
+						
 					    {this.getAdminButton()}
 					</Dropdown.Menu>
 				</Dropdown>

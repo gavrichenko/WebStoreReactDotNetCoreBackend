@@ -40,7 +40,7 @@ class UserInfo extends Component {
 		const { firstName, lastName, birthday, city, gender, phone } = this.state;
 		this.setState({ isLoaded: true });
 		const objectToSend = { firstName, lastName, birthday, city, gender, phone };
-		const mapKey = (obj) => {
+		const mapKeys = (obj) => {
 			Object.keys(obj).forEach(key => {
 				if (obj[key] === undefined) {
 					obj[key] = this.props[key];
@@ -48,7 +48,7 @@ class UserInfo extends Component {
 			});
 			return obj;
 		};
-		mapKey(objectToSend);
+		mapKeys(objectToSend);
 		updateUserInfo(email, objectToSend)
 			.then(() => this.setState({ isDisabled: true, isLoaded: false }))
 	};
@@ -62,7 +62,7 @@ class UserInfo extends Component {
 	getEditModeButton() {
 		return (
 			<div>
-				<Button type='submit' onClick={this.handleSubmit}>Изменить </Button>
+				<Button color='instagram' type='submit' onClick={this.handleSubmit}>Сохранить </Button>
 				<Button type='submit' onClick={this.handleToggleDisabled}>Отмена </Button>
 			</div>
 		);
@@ -77,7 +77,7 @@ class UserInfo extends Component {
 				<Loader active={isLoaded} size='big' />
 				<Input name='firstName' disabled={isDisabled} defaultValue={firstName} onChange={this.handleChange} placeholder='Имя' />
 				<Input name='lastName' disabled={isDisabled} defaultValue={lastName} onChange={this.handleChange} placeholder='Фамилия' />
-				<Input name='email' disabled={isDisabled} defaultValue={email} onChange={this.handleChange} placeholder='E-mail' icon='mail' iconPosition='left' />
+				<Input name='email' disabled={true} defaultValue={email} onChange={this.handleChange} placeholder='E-mail' icon='mail' iconPosition='left' />
 				<Input name='birthday' disabled={isDisabled} defaultValue={birthday} onChange={this.handleChange} placeholder='День рождения' icon='birthday' iconPosition='left' />
 				<Input name='phone' disabled={isDisabled} defaultValue={phone} onChange={this.handleChange} placeholder='Телефон' icon='phone' iconPosition='left' />
 				<Input name='gender' disabled={isDisabled} defaultValue={gender} onChange={this.handleChange} placeholder='Пол' icon='man' iconPosition='left' />

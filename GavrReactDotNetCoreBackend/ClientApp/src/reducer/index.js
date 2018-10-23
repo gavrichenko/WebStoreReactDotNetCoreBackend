@@ -4,6 +4,7 @@ import articlesReducer from './articles';
 import filterReducer from './filters';
 import flowersReduser from './flowers';
 import userReduser from "./user";
+import adminReduser from "./admin";
 
 export default combineReducers({
   count: counterReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   filters: filterReducer,
   flowers: flowersReduser,
   userInfo: userReduser,
+  admin: adminReduser
 });

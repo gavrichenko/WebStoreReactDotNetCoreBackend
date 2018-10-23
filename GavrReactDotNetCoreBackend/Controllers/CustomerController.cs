@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using GavrReactDotNetCoreBackend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GavrReactDotNetCoreBackend.Controllers
 {
-    //[Authorize(Roles = "admin, user")]
+
     [Route("api/[controller]")]
     public class CustomerController : Controller
     {
@@ -23,11 +24,15 @@ namespace GavrReactDotNetCoreBackend.Controllers
             _appDbContext = appDbContext;
         }
 
+        [Route("{userName}")]
+        [Authorize(Roles = "admin, user")]
         [HttpGet]
-        public async Task<IActionResult> GetCustomer(string userName)
+        public async Task<IActionResult> GetCustomer([FromRoute] string userName)
         {
             var user = await this._userManager.FindByNameAsync(userName);
-            var customer = await _appDbContext.Customers.Include(c => c.Identity).SingleAsync(c => c.Identity.Id == user.Id);
+            var customer = await _appDbContext.Customers
+                .Include(c => c.Identity)
+                .SingleAsync(c => c.Identity.Id == user.Id);
             if (customer != null)
             {
                 return new OkObjectResult(new
@@ -45,11 +50,14 @@ namespace GavrReactDotNetCoreBackend.Controllers
         }
 
         [Route("{userName}")]
+        [Authorize(Roles = "admin, user")]
         [HttpPut]
         public async Task<IActionResult> UpdateCustomer([FromRoute] string userName,[FromBody]CustomerModel model)
         {
             var user = await this._userManager.FindByNameAsync(userName);
-            var customer = await _appDbContext.Customers.Include(c => c.Identity).SingleAsync(c => c.Identity.Id == user.Id);
+            var customer = await _appDbContext.Customers
+                .Include(c => c.Identity)
+                .SingleAsync(c => c.Identity.Id == user.Id);
             if (model.FirstName == null || model.LastName == null) return this.BadRequest("The firstname and lastname is required");
 
             customer.FirstName = model.FirstName;
@@ -61,6 +69,19 @@ namespace GavrReactDotNetCoreBackend.Controllers
 
             await this._appDbContext.SaveChangesAsync();
             return this.Ok(customer);
+        }
+
+        [Authorize(Roles = "admin")]
+        [Route("customers")]
+        [HttpGet]
+        public IActionResult GetAllUsers()
+        {
+            var users = this._appDbContext.Customers
+                .Include(c => c.Identity.UserName)
+                .Select(c => new { Email = c.Identity.UserName , c.FirstName, c.LastName })
+                .OrderBy(c => c.LastName);
+            return this.Ok(users);
+
         }
     }
 }

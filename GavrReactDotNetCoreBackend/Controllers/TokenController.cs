@@ -69,14 +69,18 @@ namespace GavrReactDotNetCoreBackend.Controllers
         private async Task<ClaimsIdentity> GetIdentity(string userName, string password)
         {
             var user = await this._userManager.FindByNameAsync(userName);
+            var roles = await this._userManager.GetRolesAsync(user);
             var isCorrectPassword = _signInManager.UserManager.CheckPasswordAsync(user, password);
             if (isCorrectPassword.Result)
             {
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, "user") 
                 };
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, role));
+                }
                 ClaimsIdentity claimsIdentity =
                     new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                         ClaimsIdentity.DefaultRoleClaimType);

@@ -1,27 +1,63 @@
-import React, {Component} from 'react';
+﻿import React, {Component} from 'react';
 import './AdminPage.css'
-import FlowerCardAdmin from '../FlowerCardAdmin/FlowerCardAdmin';
-import FlowerInfo from '../FlowerInfo/FlowerInfo';
-import { Divider } from 'semantic-ui-react'
+import UsersList from "../UsersList/UsersList";
+import { Menu } from 'semantic-ui-react'
 
 class AdminPage extends Component {
+	constructor(props) {
+		super(props);
+		this.state = { activeItem: '' }
+	};
 
-  render() {
-    return (
-        <div className="adminWrapper">
+	handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
-          <Divider horizontal>
-            <h1>ADMIN PANEL</h1>
-          </Divider>
+	getContent() {
+		const { activeItem } = this.state
+		switch (activeItem) {
+		case 'usersInfo':
+				return <UsersList />
+		case 'productsInfo':
+			return (
+				<h1>Компонент 'Информация о продуктах'</h1>
+		);
+		case 'addProduct':
+			return (
+				<h1>Компонент 'Добавить товар'</h1>
+		);
+		default:
+}
+};
 
-          <div className="admin">
-            <FlowerCardAdmin/>
-            <FlowerInfo />
-          </div>
+render() {
+	const { activeItem } = this.state
+	return (
+	<div className='accountContainer'>
+		<Menu pointing secondary vertical>
+			<Menu.Item
+				content='Данные о пользователях'
+				name='usersInfo'
+				active={activeItem === 'usersInfo'}
+				onClick={this.handleItemClick} />
+			<Menu.Item
+				content='Данные о товарах'
+				name='productsInfo'
+				active={activeItem === 'productsInfo'}
+				onClick={this.handleItemClick}
+			/>
+			<Menu.Item
+				content='Добавить товар'
+				name='addProduct'
+				active={activeItem === 'addProduct'}
+				onClick={this.handleItemClick}
+			/>
+		</Menu>
+			<div className='admin__infoContainer'>
+			{this.getContent()}
+		</div>
+	</div>
+	)
+};
 
-        </div>
-    )
-  }
 
 }
 

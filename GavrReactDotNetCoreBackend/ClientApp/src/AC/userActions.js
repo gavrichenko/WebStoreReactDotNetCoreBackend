@@ -1,4 +1,4 @@
-import { GET_TOKEN, SIGN_UP, GET_USER_INFO, UPDATE_USER_INFO} from "../constance";
+import { GET_TOKEN, SIGN_UP, GET_USER_INFO, UPDATE_USER_INFO, GET_ALL_USERS} from "../constance";
 
 export function getToken(data) {
 	return {
@@ -21,7 +21,7 @@ export function signUp(data) {
 export function getUserInfo(userName) {
 	return {
 		type: GET_USER_INFO,
-		callAPI: `api/customer?userName=${userName}`,
+		callAPI: `api/customer/${userName}`,
 		isAuthorize: true,
 		typeOfMethod: 'get',
 	}
@@ -34,5 +34,14 @@ export function updateUserInfo(userName, data) {
 		isAuthorize: true,
 		typeOfMethod: 'put',
 		apiData: { data },
+	}
+}
+
+export function getAllUsers() {
+	return {
+		type: GET_ALL_USERS,
+		callAPI: `api/customer/customers`,
+		isAuthorize: true,
+		typeOfMethod: 'get',
 	}
 }
