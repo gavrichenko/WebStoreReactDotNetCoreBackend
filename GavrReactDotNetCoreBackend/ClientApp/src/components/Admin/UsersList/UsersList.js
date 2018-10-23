@@ -1,17 +1,14 @@
 ﻿import React, { Component } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { getUserInfo, getAllUsers } from "../../../AC/userActions";
-import { Button, Loader, Table } from 'semantic-ui-react'
+import { getUserInfo, getAllUsers, sortUsers } from "../../../AC/userActions";
+import UserSearch from "../UserSearch/UserSearch";
+import { Button, Loader, Table } from 'semantic-ui-react';
+
 import { withRouter } from "react-router-dom";
 import './UsersList.css';
 
-const tableData = [
-	{ name: 'John', age: 15, gender: 'Male' },
-	{ name: 'Amber', age: 40, gender: 'Female' },
-	{ name: 'Leslie', age: 25, gender: 'Female' },
-	{ name: 'Ben', age: 70, gender: 'Male' },
-]
+
 
 class UsersList extends Component {
 	constructor(props) {
@@ -19,37 +16,37 @@ class UsersList extends Component {
 		this.state = {
 			isLoaded: false,
 			column: null,
-			data: tableData,
 			direction: null,
 		};
 	};
 
 	componentDidMount() {
-		//const { getAllUsers, users } = this.props;
-		//this.setState({ isLoaded: true });
-		//getAllUsers()
-		//	.then((apiData) => {
-		//		this.setState({
-		//			isLoaded: false,
-		//			data: users,
-		//		});
-		//	});
+		const { getAllUsers } = this.props;
+		this.setState({ isLoaded: true });
+		getAllUsers()
+			.then(() => {
+				this.setState({
+					isLoaded: false,
+				});
+			});
 	};
 
 	handleSort = clickedColumn => () => {
-		const { column, data, direction } = this.state
+		const { column, direction } = this.state
+		const { users, sortUsers } = this.props;
 
+		
 		if (column !== clickedColumn) {
+			//sortUsers(_.sortBy(users, [clickedColumn]));
 			this.setState({
 				column: clickedColumn,
-				data: _.sortBy(data, [clickedColumn]),
 				direction: 'ascending',
 			});
 			return
 		}
 
+		users.reverse();
 		this.setState({
-			data: data.reverse(),
 			direction: direction === 'ascending' ? 'descending' : 'ascending',
 		})
 	};
@@ -62,44 +59,47 @@ class UsersList extends Component {
 
 
 	render() {
-
-
-		const { isLoaded, column, data, direction  } = this.state;
+		const { isLoaded, column, direction } = this.state;
+		const { users, sortedUsers } = this.props;
+		const filteredUsers = sortedUsers.length ? sortedUsers.map((user) => {
+			return { email: user.original.email, firstName: user.original.firstName, lastName: user.original.lastName }
+		}) : users;
 		return (
 			<div className='usersList'>
 
 				<Loader active={isLoaded} size='big' />
-				<h1>Данные о пользователях</h1>
+
+				<UserSearch />
 
 				<Table sortable celled selectable>
 					<Table.Header>
 						<Table.Row>
 							<Table.HeaderCell
-								sorted={column === 'name' ? direction : null}
-								onClick={this.handleSort('name')}
+								sorted={column === 'email' ? direction : null}
+								onClick={this.handleSort('email')}
 							>
-								Name
+								Email
 							</Table.HeaderCell>
 							<Table.HeaderCell
-								sorted={column === 'age' ? direction : null}
-								onClick={this.handleSort('age')}
+								sorted={column === 'firstName' ? direction : null}
+								onClick={this.handleSort('firstName')}
 							>
-								Age
+								Имя
 							</Table.HeaderCell>
 							<Table.HeaderCell
-								sorted={column === 'gender' ? direction : null}
-								onClick={this.handleSort('gender')}
+								sorted={column === 'lastName' ? direction : null}
+								onClick={this.handleSort('lastName')}
 							>
-								Gender
+								Фамилия
 							</Table.HeaderCell>
 						</Table.Row>
 					</Table.Header>
 					<Table.Body >
-						{_.map(data, ({ age, gender, name }) => (
-							<Table.Row key={name} onClick={() => this.handleRowClick(name)}>
-								<Table.Cell>{name}</Table.Cell>
-								<Table.Cell>{age}</Table.Cell>
-								<Table.Cell>{gender}</Table.Cell>
+						{_.map(filteredUsers, ({ email, firstName, lastName }) => (
+							<Table.Row key={email} onClick={() => this.handleRowClick(email)}>
+								<Table.Cell>{email}</Table.Cell>
+								<Table.Cell>{firstName}</Table.Cell>
+								<Table.Cell>{lastName}</Table.Cell>
 							</Table.Row>
 						))}
 					</Table.Body>
@@ -112,6 +112,6 @@ class UsersList extends Component {
 export default connect((state) => {
 	return {
 		users: state.admin.users,
-	}
-	
-}, { getUserInfo, getAllUsers })(withRouter(UsersList));
+		sortedUsers: state.admin.sortUsers,
+	}	
+}, { getUserInfo, getAllUsers, sortUsers })(withRouter(UsersList));

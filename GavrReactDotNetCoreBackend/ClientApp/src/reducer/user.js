@@ -1,4 +1,4 @@
-import { SUCCESS, FAIL, GET_TOKEN, GET_USER_INFO, GET_ROLE_BY_NAME, UPDATE_USER_INFO, GET_ALL_USERS } from "../constance";
+import { SUCCESS, FAIL, GET_TOKEN, GET_USER_INFO, GET_ROLE_BY_NAME, UPDATE_USER_INFO } from "../constance";
 
 const defaultState = {
 	isLoggedIn: false,

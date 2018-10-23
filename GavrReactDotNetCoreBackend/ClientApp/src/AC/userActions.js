@@ -1,4 +1,4 @@
-import { GET_TOKEN, SIGN_UP, GET_USER_INFO, UPDATE_USER_INFO, GET_ALL_USERS} from "../constance";
+import { GET_TOKEN, SIGN_UP, GET_USER_INFO, UPDATE_USER_INFO, GET_ALL_USERS, SORT_USERS, SEARCH_USER} from "../constance";
 
 export function getToken(data) {
 	return {
@@ -43,5 +43,19 @@ export function getAllUsers() {
 		callAPI: `api/customer/customers`,
 		isAuthorize: true,
 		typeOfMethod: 'get',
+	}
+}
+
+export function sortUsers(selected) {
+	return {
+		type: SORT_USERS,
+		payload: { selected }
+	}
+}
+
+export function searchUser(selected) {
+	return {
+		type: SEARCH_USER,
+		payload: { selected }
 	}
 }

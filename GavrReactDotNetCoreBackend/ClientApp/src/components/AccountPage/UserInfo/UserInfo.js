@@ -75,6 +75,7 @@ class UserInfo extends Component {
 		return (
 			<div className='userDataContainer'>
 				<Loader active={isLoaded} size='big' />
+
 				<Input name='firstName' disabled={isDisabled} defaultValue={firstName} onChange={this.handleChange} placeholder='Имя' />
 				<Input name='lastName' disabled={isDisabled} defaultValue={lastName} onChange={this.handleChange} placeholder='Фамилия' />
 				<Input name='email' disabled={true} defaultValue={email} onChange={this.handleChange} placeholder='E-mail' icon='mail' iconPosition='left' />
