@@ -60,9 +60,9 @@ export function searchUser(selected) {
 	}
 }
 
-export function toggleUserCard(userCardState) {
+export function toggleUserCard(userCardState, userEmail) {
 	return {
 		type: TOGGLE_USERCARD_ADMIN,
-		payload: { userCardState }
+		payload: { userCardState, userEmail }
 	}
 }

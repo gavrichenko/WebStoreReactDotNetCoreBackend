@@ -53,14 +53,15 @@ class UsersList extends Component {
 		})
 	};
 
-	handleRowClick(value) {
+	handleRowClick(userEmail) {
 		const { toggleUserCard } = this.props;
-		toggleUserCard(true);
 
-		console.log(value);
+		const { getUserInfo } = this.props;
+		this.setState({ isLoaded: true });
+		getUserInfo(userEmail)
+			.then(() => this.setState({ isLoaded: false, userEmail }))
+			.then(() => toggleUserCard(true, userEmail))	
 	}
-
-
 
 	render() {
 		const { isLoaded, column, direction, isUserCardOpen } = this.state;

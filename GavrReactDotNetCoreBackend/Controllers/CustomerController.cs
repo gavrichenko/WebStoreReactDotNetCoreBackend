@@ -68,7 +68,8 @@ namespace GavrReactDotNetCoreBackend.Controllers
             customer.Phone = model.Phone;
 
             await this._appDbContext.SaveChangesAsync();
-            return this.Ok(customer);
+            var res = new {customer.FirstName, customer.LastName};
+            return this.Ok(res);
         }
 
         [Authorize(Roles = "admin")]

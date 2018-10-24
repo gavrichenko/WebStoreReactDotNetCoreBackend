@@ -4,6 +4,7 @@ const defaultState = {
 	users: [],
 	sortUsers: [],
 	isOpenUserCard: false,
+	userCardEmail: '', 
 };
 
 export default (state = defaultState, action) => {
@@ -27,6 +28,7 @@ export default (state = defaultState, action) => {
 	  case TOGGLE_USERCARD_ADMIN: return {
 		  ...state,
 		  isOpenUserCard: payload.userCardState,
+		  userCardEmail: payload.userEmail,
 	  };
   }
 	return state;

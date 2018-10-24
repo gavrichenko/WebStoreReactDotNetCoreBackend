@@ -14,17 +14,25 @@ class UserInfo extends Component {
 		};
 	};
 
-	componentDidMount() {
-		const username = localStorage.getItem('user') !== null ? JSON.parse(localStorage.getItem('user')).username : null;
-		if (username !== null) {
-			const { getUserInfo } = this.props;
-			this.setState({ isLoaded: true });
-			getUserInfo(username)
-				.then(() => this.setState({ isLoaded: false, username }));
-		}
+	 componentDidMount() {
+		const { getUserInfo, isUpdFromAdminPage, email } = this.props;
+		const emailFromCookie = JSON.parse(localStorage.getItem('user')).username;
+	 
+		 if (emailFromCookie !== email && !isUpdFromAdminPage) {
+			 this.setState({ isLoaded: true });
+			 getUserInfo(emailFromCookie)
+				 .then(() => this.setState({ isLoaded: false }));
+		};
+
 	};
 
-	handleToggleDisabled = () => this.setState({ isDisabled: !this.state.isDisabled });
+
+	handleToggleDisabled = () => {
+		// todo: here back to previosly state
+		this.setState({
+			isDisabled: !this.state.isDisabled,
+		});		
+	};
 
 	handleChange = (e) => {
 		const { name, value, defaultValue } = e.target;
@@ -103,5 +111,7 @@ export default connect((state) => {
 		city: state.userInfo.city,
 		gender: state.userInfo.gender,
 		phone: state.userInfo.phone,
+
+		isUpdFromAdminPage: state.admin.isOpenUserCard,
 	}
 }, { getUserInfo, updateUserInfo })(withRouter(UserInfo));

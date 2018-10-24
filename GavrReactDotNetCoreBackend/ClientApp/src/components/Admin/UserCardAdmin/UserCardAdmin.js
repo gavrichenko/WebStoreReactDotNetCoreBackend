@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { searchUser, toggleUserCard } from "../../../AC/userActions";
 import { Button, Header, Icon, Image, Modal } from 'semantic-ui-react'
+import AccountPage from "../../AccountPage/AccountPage";
 
 class UserCardAdmin extends Component {
 	constructor(props) {
@@ -16,26 +17,17 @@ class UserCardAdmin extends Component {
 	}
 
 	render() {
-		const { isOpen } = this.props;
+		const { isOpen, userEmail } = this.props;
 
 		return (
 			<Modal open={isOpen} >
-				<Modal.Header>Данные пользователя $email}</Modal.Header>
+				<Modal.Header>Карточка {userEmail}</Modal.Header>
 				<Modal.Content image scrolling>
-					<Image size='medium' src='https://react.semantic-ui.com/images/wireframe/image.png' wrapped />
-
-					<Modal.Description>
-						<Header>Modal Header</Header>
-						<p>This is an example of expanded content that will cause the modal's dimmer to scroll</p>
-
-						{_.times(8, i => (
-							<Image key={i} src='https://react.semantic-ui.com/images/wireframe/paragraph.png' style={{ paddingBottom: 5 }} />
-						))}
-					</Modal.Description>
+					<AccountPage />
 				</Modal.Content>
 				<Modal.Actions>
 					<Button primary onClick={this.handleClose}>
-						Proceed <Icon name='chevron right' />
+						Закрыть <Icon name='chevron right' />
 					</Button>
 				</Modal.Actions>
 			</Modal>
@@ -46,6 +38,7 @@ class UserCardAdmin extends Component {
 export default connect((state) => {
 		return {
 			isOpen: state.admin.isOpenUserCard,
+			userEmail: state.admin.userCardEmail,
 		}
 	},
 	{ searchUser, toggleUserCard })(UserCardAdmin);
