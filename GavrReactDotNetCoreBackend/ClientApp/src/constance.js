@@ -22,6 +22,8 @@ export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const SORT_USERS = 'SORT_USERS';
 export const SEARCH_USER = 'SEARCH_USER';
+export const TOGGLE_USERCARD_ADMIN = 'TOGGLE_USERCARD_ADMIN';
+
 
 // for loader component
 export const START = '_START';

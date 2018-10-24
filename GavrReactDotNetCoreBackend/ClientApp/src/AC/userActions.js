@@ -1,4 +1,4 @@
-import { GET_TOKEN, SIGN_UP, GET_USER_INFO, UPDATE_USER_INFO, GET_ALL_USERS, SORT_USERS, SEARCH_USER} from "../constance";
+import { GET_TOKEN, SIGN_UP, GET_USER_INFO, UPDATE_USER_INFO, GET_ALL_USERS, SORT_USERS, SEARCH_USER, TOGGLE_USERCARD_ADMIN} from "../constance";
 
 export function getToken(data) {
 	return {
@@ -57,5 +57,12 @@ export function searchUser(selected) {
 	return {
 		type: SEARCH_USER,
 		payload: { selected }
+	}
+}
+
+export function toggleUserCard(userCardState) {
+	return {
+		type: TOGGLE_USERCARD_ADMIN,
+		payload: { userCardState }
 	}
 }

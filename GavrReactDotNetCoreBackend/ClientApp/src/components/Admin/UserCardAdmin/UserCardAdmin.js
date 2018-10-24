@@ -1,19 +1,26 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { searchUser } from "../../../AC/userActions";
+import { searchUser, toggleUserCard } from "../../../AC/userActions";
 import { Button, Header, Icon, Image, Modal } from 'semantic-ui-react'
 
-class UserSearch extends Component {
+class UserCardAdmin extends Component {
+	constructor(props) {
+		super(props);
+		this.state = { };
+	};
 
-
+	handleClose = () => {
+		const { toggleUserCard } = this.props;
+		toggleUserCard(false);
+	}
 
 	render() {
+		const { isOpen } = this.props;
 
-	
 		return (
-			<Modal trigger={<Button>Scrolling Content Modal</Button>}>
-				<Modal.Header>Profile Picture</Modal.Header>
+			<Modal open={isOpen} >
+				<Modal.Header>Данные пользователя $email}</Modal.Header>
 				<Modal.Content image scrolling>
 					<Image size='medium' src='https://react.semantic-ui.com/images/wireframe/image.png' wrapped />
 
@@ -27,7 +34,7 @@ class UserSearch extends Component {
 					</Modal.Description>
 				</Modal.Content>
 				<Modal.Actions>
-					<Button primary>
+					<Button primary onClick={this.handleClose}>
 						Proceed <Icon name='chevron right' />
 					</Button>
 				</Modal.Actions>
@@ -38,9 +45,7 @@ class UserSearch extends Component {
 
 export default connect((state) => {
 		return {
-			users: state.admin.users.map((res) => {
-				return { title: res.email, description: `${res.firstName} ${res.lastName}`, original: res };
-			})
+			isOpen: state.admin.isOpenUserCard,
 		}
 	},
-	{ searchUser })(UserSearch);
+	{ searchUser, toggleUserCard })(UserCardAdmin);

@@ -1,8 +1,9 @@
-import { SUCCESS, FAIL, GET_ALL_USERS, SORT_USERS, SEARCH_USER } from "../constance";
+import { SUCCESS, FAIL, GET_ALL_USERS, SORT_USERS, SEARCH_USER, TOGGLE_USERCARD_ADMIN } from "../constance";
 
 const defaultState = {
 	users: [],
 	sortUsers: [],
+	isOpenUserCard: false,
 };
 
 export default (state = defaultState, action) => {
@@ -21,6 +22,11 @@ export default (state = defaultState, action) => {
 	  case SEARCH_USER: return {
 		  ...state,
 		  sortUsers: payload.selected,
+	  };
+
+	  case TOGGLE_USERCARD_ADMIN: return {
+		  ...state,
+		  isOpenUserCard: payload.userCardState,
 	  };
   }
 	return state;

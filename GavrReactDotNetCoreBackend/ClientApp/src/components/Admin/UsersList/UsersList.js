@@ -1,8 +1,9 @@
 ﻿import React, { Component } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { getUserInfo, getAllUsers, sortUsers } from "../../../AC/userActions";
+import { getUserInfo, getAllUsers, sortUsers, toggleUserCard } from "../../../AC/userActions";
 import UserSearch from "../UserSearch/UserSearch";
+import UserCardAdmin from "../UserCardAdmin/UserCardAdmin";
 import { Button, Loader, Table } from 'semantic-ui-react';
 
 import { withRouter } from "react-router-dom";
@@ -17,6 +18,7 @@ class UsersList extends Component {
 			isLoaded: false,
 			column: null,
 			direction: null,
+			isUserCardOpen: false,
 		};
 	};
 
@@ -33,7 +35,7 @@ class UsersList extends Component {
 
 	handleSort = clickedColumn => () => {
 		const { column, direction } = this.state
-		const { users, sortUsers } = this.props;
+		const { users } = this.props;
 
 		
 		if (column !== clickedColumn) {
@@ -52,14 +54,16 @@ class UsersList extends Component {
 	};
 
 	handleRowClick(value) {
+		const { toggleUserCard } = this.props;
+		toggleUserCard(true);
 
-		console.log(value)
+		console.log(value);
 	}
 
 
 
 	render() {
-		const { isLoaded, column, direction } = this.state;
+		const { isLoaded, column, direction, isUserCardOpen } = this.state;
 		const { users, sortedUsers } = this.props;
 		const filteredUsers = sortedUsers.length ? sortedUsers.map((user) => {
 			return { email: user.original.email, firstName: user.original.firstName, lastName: user.original.lastName }
@@ -68,7 +72,7 @@ class UsersList extends Component {
 			<div className='usersList'>
 
 				<Loader active={isLoaded} size='big' />
-
+				<UserCardAdmin />
 				<UserSearch />
 
 				<Table sortable celled selectable>
@@ -114,4 +118,4 @@ export default connect((state) => {
 		users: state.admin.users,
 		sortedUsers: state.admin.sortUsers,
 	}	
-}, { getUserInfo, getAllUsers, sortUsers })(withRouter(UsersList));
+}, { getUserInfo, getAllUsers, sortUsers, toggleUserCard })(withRouter(UsersList));
