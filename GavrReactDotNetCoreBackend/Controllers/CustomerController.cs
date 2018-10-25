@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using GavrReactDotNetCoreBackend.Models;
+﻿using GavrReactDotNetCoreBackend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace GavrReactDotNetCoreBackend.Controllers
@@ -82,7 +82,6 @@ namespace GavrReactDotNetCoreBackend.Controllers
                 .Select(c => new { Email = c.Identity.UserName , c.FirstName, c.LastName })
                 .OrderBy(c => c.LastName);
             return this.Ok(users);
-
         }
     }
 }

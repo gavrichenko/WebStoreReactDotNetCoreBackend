@@ -1,6 +1,8 @@
 ﻿import React, {Component} from 'react';
 import './AdminPage.css'
 import UsersList from "../UsersList/UsersList";
+import FlowerCardAdmin from "../FlowerCardAdmin/FlowerCardAdmin";
+import FlowerCard from "../../FlowerCard/FlowerCard";
 import { Menu } from 'semantic-ui-react'
 
 class AdminPage extends Component {
@@ -22,7 +24,13 @@ class AdminPage extends Component {
 		);
 		case 'addProduct':
 			return (
-				<h1>Компонент 'Добавить товар'</h1>
+				//<h1>Компонент 'Добавить товар'</h1>
+				//<FlowerCardAdmin />
+				<FlowerCard
+					name='Букетик'
+					price={1100}
+					description='описание'
+						/>
 		);
 		default:
 }

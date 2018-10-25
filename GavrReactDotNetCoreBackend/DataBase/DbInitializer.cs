@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GavrReactDotNetCoreBackend.Models;
+﻿using GavrReactDotNetCoreBackend.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GavrReactDotNetCoreBackend.DataBase
 {
@@ -15,6 +14,7 @@ namespace GavrReactDotNetCoreBackend.DataBase
         {
             string adminEmail = "admin@admin.com";
             string password = "paswrd123";
+            string flowerName = "DB Flower";
 
             if (await roleManager.FindByNameAsync("admin") == null)
             {
@@ -54,6 +54,24 @@ namespace GavrReactDotNetCoreBackend.DataBase
                     await appDbContext.SaveChangesAsync();
                 }
             }
+
+            // add default flower
+            var product = appDbContext.Products.FirstOrDefault(model => model.Name == flowerName);
+            if (product == null)
+            {
+                var flower = new ProductModel()
+                {
+                    Name = flowerName,
+                    Description = "Flower description here...",
+                    Price = 1299,
+                    Rating = 4,
+                    Image = "http://u0564377.plsk.regruhosting.ru/1.jpg",
+                };
+
+                await appDbContext.Products.AddAsync(flower);
+                await appDbContext.SaveChangesAsync();
+            }
+
         }
 
         internal static Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> rolesManager, DbSet<CustomerModel> dbContext)

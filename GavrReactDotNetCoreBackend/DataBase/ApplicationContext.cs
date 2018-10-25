@@ -11,5 +11,6 @@ namespace GavrReactDotNetCoreBackend.Models
         }
 
         public DbSet<CustomerModel> Customers { get; set; }
+        public DbSet<ProductModel> Products { get; set; }
     }
 }

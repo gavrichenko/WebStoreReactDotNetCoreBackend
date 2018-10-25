@@ -50,7 +50,8 @@ namespace GavrReactDotNetCoreBackend
                     opts.Password.RequireNonAlphanumeric = false;
                     opts.Password.RequireLowercase = false; 
                     opts.Password.RequireUppercase = false; 
-                    opts.Password.RequireDigit = false; 
+                    opts.Password.RequireDigit = false;
+                    opts.SignIn.RequireConfirmedEmail = true;
                 })
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();

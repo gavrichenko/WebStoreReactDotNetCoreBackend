@@ -11,7 +11,7 @@ class FlowersList extends Component {
     const {getFlowers, getFlower, loading, loaded} = this.props;
     console.log('getting flowers list');
     if (!loading || ! loaded) {
-      getFlowers();
+    //  getFlowers();
     }
   }
 

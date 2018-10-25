@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getToken, getUserInfo } from "../../AC/userActions";
+import { getUserRole } from "../../AC/rolesActions";
 import { GET_TOKEN, SUCCESS } from "../../constance";
 import './LoginPage.css';
 import { Button, Form, Grid, Header, Loader, Message, Segment, Icon } from 'semantic-ui-react'
@@ -32,7 +33,7 @@ class LoginPage extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		const { getToken, getUserInfo } = this.props;
+		const { getToken, getUserInfo, getUserRole } = this.props;
 
 		this.setState({ submitted: true });
 		const { username, password } = this.state;
@@ -51,7 +52,8 @@ class LoginPage extends Component {
 				})
 				.then((tokenData) => {
 					const username = tokenData.responseAPI.username;
-					getUserInfo(username)
+					getUserInfo(username);
+					getUserRole(username);
 					this.props.history.push('/');
 				})
 				.catch(e => console.log(e));
@@ -122,4 +124,4 @@ class LoginPage extends Component {
   }
 
 }
-export default connect(null, { getToken, getUserInfo })(LoginPage);
+export default connect(null, { getToken, getUserInfo, getUserRole })(LoginPage);

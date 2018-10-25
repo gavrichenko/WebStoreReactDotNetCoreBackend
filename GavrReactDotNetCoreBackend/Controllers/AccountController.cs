@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using GavrReactDotNetCoreBackend.Models;
+﻿using GavrReactDotNetCoreBackend.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 
 namespace GavrReactDotNetCoreBackend.Controllers
