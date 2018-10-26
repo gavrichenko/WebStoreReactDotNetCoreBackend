@@ -23,7 +23,8 @@ export function changeSelection(selected) {
 export function getFlowers() {
   return {
     type: GET_FLOWERS,
-    callAPI: 'flowers/',
+    callAPI: 'api/Product/products',
+    typeOfMethod: 'get',
   }
 }
 

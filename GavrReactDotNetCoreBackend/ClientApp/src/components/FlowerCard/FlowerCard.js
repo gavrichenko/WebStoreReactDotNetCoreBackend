@@ -9,16 +9,19 @@ class FlowerCard extends Component {
     price: PropTypes.number,
     description: PropTypes.string,
     rating: PropTypes.number,
-    comments: PropTypes.array,
+	comments: PropTypes.array,
+	image: PropTypes.string,
   };
 
   render() {
-    const {name, price, description, rating} = this.props;
+    const {name, price, description, rating, image} = this.props;
     const commentsList = this.props.comments;
     return (
       <div className="flowerCard">
-        <Card>
-          <Image src={require('../../static/img/1.jpg')} />
+			<Card>
+		  <div>
+					<Image src={image} />
+		  </div>
           <Card.Content>
             <Card.Header>{name}</Card.Header>
             <Card.Meta><a>Отзывы ({Math.floor(Math.random() * (0 - 20)) + 20})</a></Card.Meta>

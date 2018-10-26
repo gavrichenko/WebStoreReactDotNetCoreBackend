@@ -37,7 +37,8 @@ class FlowersList extends Component {
         description = {el.description}
         rating = {el.rating}
         comments = {el.comments}
-      />);
+		image={el.image}
+		/>);
   };
 }
 
