@@ -1,9 +1,10 @@
-import {GET_FLOWERS, GET_FLOWER, ADD_FLOWER, START, SUCCESS} from "../constance";
+import {GET_FLOWERS, GET_FLOWER, ADD_FLOWER, START, SUCCESS, SET_FILTER} from "../constance";
 
 const defaultState = {
   data: [],
   lastCreatedFlower: [],
   flowerData: [],
+  filterBy: 'all',
   loading: false,
   loaded: false,
 };
@@ -16,13 +17,20 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         loading: true,
-      };
+		};
+
     case GET_FLOWERS + SUCCESS:
+	    return {
+		    ...state,
+		    data: responseAPI,
+		    loading: false,
+		    loaded: true,
+		};
+
+	case SET_FILTER:
       return {
         ...state,
-        data: responseAPI,
-        loading: false,
-        loaded: true,
+        filterBy: action.payload,
       };
 
    //for creating a new flower via POST request of API

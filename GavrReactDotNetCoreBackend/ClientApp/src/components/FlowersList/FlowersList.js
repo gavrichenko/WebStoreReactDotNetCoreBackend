@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {getFlower, getFlowers} from "../../AC";
-
-import './FlowerList.css';
 import FlowerCard from '../FlowerCard/FlowerCard';
 import Spinner from '../Spinner';
+import './FlowerList.css';
+import _ from 'lodash';
 
 class FlowersList extends Component {
   componentDidMount() {
@@ -30,8 +30,9 @@ class FlowersList extends Component {
 
   getFlowersList() {
     const {flowersData} = this.props;
-    return flowersData.map(el =>
-      <FlowerCard key={el._id}
+    return flowersData.map((el, i) =>
+      <FlowerCard key={i}
+        id={el.id}
         name = {el.name}
         price={el.price}
         description = {el.description}
@@ -42,10 +43,25 @@ class FlowersList extends Component {
   };
 }
 
+const sortBy = (flowersData, filterBy) => {
+	switch (filterBy) {
+		case 'all':
+			return flowersData;
+		case 'price_high':		
+			return _.orderBy(flowersData, 'price', 'asc'); 
+		case 'price_low':
+			return _.orderBy(flowersData, 'price', 'desc');
+		default:
+			return flowersData;
+	}
+	return 
+};
+
 export default connect((state) => {
   return {
-    flowersData: state.flowers.data,
+    flowersData: sortBy(state.flowers.data, state.flowers.filterBy),
     flowerData: state.flowers.flowerData,
+    filterBy: state.flowers.filterBy,
     loading: state.flowers.loading,
     loaded: state.flowers.loaded,
   }

@@ -72,6 +72,7 @@ class SearchExampleStandard extends Component {
         onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
         results={results}
         value={value}
+		placeholder='Поиск по названию'
         {...this.props}
       />
     )

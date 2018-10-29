@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './ShopPage.css'
 import FlowersList from "../FlowersList/FlowersList";
+import ProductFilter from "../ProductFilter/ProductFilter";
 import {getFlowers} from "../../AC/index";
-import SearchSemantic from '../SearchSemantic';
 
 class ShopPage extends Component {
 	constructor(props) {
@@ -12,19 +12,24 @@ class ShopPage extends Component {
 	};
 
 	componentDidMount() {
-		const { getFlowers } = this.props;
-		this.setState({ isLoaded: true });
-		getFlowers()
-			.then(() => {
-				this.setState({
-					isLoaded: false,
+		const { getFlowers, flowersData } = this.props;
+
+		//uploading flowers data from api
+		if (flowersData.length === 0) {
+			this.setState({ isLoaded: true });
+			getFlowers()
+				.then(() => {
+					this.setState({
+						isLoaded: false,
+					});
 				});
-			});
+		}
 	};
-  render() {
+
+	render() {
     return (
       <div className="shop">
-        <SearchSemantic className ="shop__search"/>
+        <ProductFilter />
         <FlowersList />
       </div>
     )
@@ -32,4 +37,8 @@ class ShopPage extends Component {
 
 }
 
-export default connect(null, { getFlowers })(ShopPage);
+export default connect((state) => {
+	return {
+		flowersData: state.flowers.data,
+	}
+}, { getFlowers })(ShopPage);

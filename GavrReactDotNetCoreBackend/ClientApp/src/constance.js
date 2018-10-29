@@ -19,6 +19,13 @@ export const GET_USER_INFO = 'GET_USER_INFO';
 export const GET_ROLE_BY_NAME = 'GET_ROLE_BY_NAME';
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 
+//flowers
+export const SET_FILTER = 'SET_FILTER';
+
+// cart
+export const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART';
+
+// users for admin
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const SORT_USERS = 'SORT_USERS';
 export const SEARCH_USER = 'SEARCH_USER';
