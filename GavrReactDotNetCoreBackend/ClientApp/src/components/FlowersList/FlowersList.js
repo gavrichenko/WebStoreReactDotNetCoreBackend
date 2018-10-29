@@ -43,23 +43,29 @@ class FlowersList extends Component {
   };
 }
 
-const sortBy = (flowersData, filterBy) => {
-	switch (filterBy) {
-		case 'all':
-			return flowersData;
-		case 'price_high':		
-			return _.orderBy(flowersData, 'price', 'asc'); 
+const sortBy = (flowersData, filterBy, filteredQuery) => {
+	let filtered = () => {
+		switch (filterBy) {
+		case 'price_high':
+			return _.orderBy(flowersData, 'price', 'asc');
 		case 'price_low':
 			return _.orderBy(flowersData, 'price', 'desc');
+		case 'all':
 		default:
 			return flowersData;
+		}
 	}
-	return 
+
+	if (filteredQuery != '') {
+		console.log(filteredQuery);
+		return _.filter(filtered(), o => o.name.toLowerCase().indexOf(filteredQuery.toLowerCase()) >=0);
+	}
+	return filtered();
 };
 
 export default connect((state) => {
   return {
-    flowersData: sortBy(state.flowers.data, state.flowers.filterBy),
+	flowersData: sortBy(state.flowers.data, state.flowers.filterBy, state.flowers.filterByQuery),
     flowerData: state.flowers.flowerData,
     filterBy: state.flowers.filterBy,
     loading: state.flowers.loading,

@@ -21,6 +21,7 @@ export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 
 //flowers
 export const SET_FILTER = 'SET_FILTER';
+export const SET_FILTER_BY_QUERY = 'SET_FILTER_BY_QUERY';
 
 // cart
 export const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART';

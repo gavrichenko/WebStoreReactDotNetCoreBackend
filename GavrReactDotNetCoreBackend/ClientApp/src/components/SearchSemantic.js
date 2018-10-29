@@ -1,27 +1,11 @@
 import _ from 'lodash';
-import faker from 'faker';
 import React, { Component } from 'react';
-import { Search, Grid, Header, Segment } from 'semantic-ui-react';
-import {getFlowers} from "../AC";
+import { Search } from 'semantic-ui-react';
+import { setSearchQuery} from "../AC/flowersFilterActions";
 import {connect} from "react-redux";
-
-const source = _.times(10, () => ({
-  title: faker.company.companyName(),
-  description: faker.company.catchPhrase(),
-  image: faker.internet.avatar(),
-  price: faker.finance.amount(0, 100, 2, '$'),
-}));
-
 
 
 class SearchExampleStandard extends Component {
-  componentDidMount() {
-    const {getFlowers, loading, loaded} = this.props;
-    console.log('getting flowers list for search component');
-    if (!loading || ! loaded) {
-      getFlowers();
-    }
-  }
 
   componentWillMount() {
     this.resetComponent()
@@ -34,33 +18,37 @@ class SearchExampleStandard extends Component {
         title: el.name,
         description: el.description,
         price: `${el.price} руб.`,
-        image: require('../static/img/1.jpg')
+        image: el.image,
       }
     });
   };
 
-  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' });
+	resetComponent = () => {
+		this.setState({ isLoading: false, results: [], value: '' });
+		this.props.setSearchQuery('');
+	}
 
-  handleResultSelect = (e, { result }) => {
-
-
+	handleResultSelect = (e, { result }) => {
+	this.props.setSearchQuery(result.title );
     this.setState({ value: result.title })
   };
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value });
-
+    this.props.setSearchQuery(value);
+	
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent();
 
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
       const isMatch = result => re.test(result.title);
 
+	 
       this.setState({
         isLoading: false,
         results: _.filter(this.changeKeysForEachElemnt(), isMatch),
       })
-    }, 200)
+    }, 100)
   };
 
   render() {
@@ -83,5 +71,5 @@ export default connect((state) => {
   return {
     flowersData: state.flowers.data,
   }
-}, {getFlowers}) (SearchExampleStandard)
+}, { setSearchQuery }) (SearchExampleStandard)
 
