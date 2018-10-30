@@ -36,6 +36,7 @@ class CartItem extends Component {
 
 	render() {
 		const { id, name, price, image, description, count, rating } = this.props;
+
 		return (
 			<div className='cartItem'>
 				<Card.Group itemsPerRow='one'>
@@ -52,6 +53,7 @@ class CartItem extends Component {
 										<Card.Meta>Описание: {description}</Card.Meta>
 										<Card.Content>Цена: {price} руб.</Card.Content>
 										<Card.Content>Количество: {count} шт.</Card.Content>										
+										<Card.Content><b>Итого: {price * count} руб.</b>  ({price}*{count})</Card.Content>										
 									</Grid.Column>
 									<Grid.Column width={3}>
 										<div className="cart-buttons">

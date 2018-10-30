@@ -2,7 +2,8 @@
 import { connect } from 'react-redux';
 import './Cart.css';
 import { removeItemFromCart } from "../../AC/cart";
-import { Grid } from 'semantic-ui-react';
+import { Grid, Message, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import CartItem from "./CartItem/CartItem";
 import OrderInfo from "./OrderInfo/OrderInfo";
 
@@ -13,7 +14,17 @@ class Cart extends Component {
 	};
 
 	getItemList() {
-		const { cartItems, removeItemFromCart } = this.props;
+		const { cartItems } = this.props;
+		if (cartItems.length === 0) {
+			return (
+				<Message success size='huge'>
+					<Message.Header>В это сложно поверить, но ваша корзина пуста</Message.Header>
+					<Message.Content>Воспользуйтесь нашим
+						<Link to="/shop"> каталогом</Link>  	
+					, чтобы наполнить её.</Message.Content>		
+				</Message>
+			);
+		}
 		return cartItems.map((item) => <CartItem {...item} /> );
 	};
 
