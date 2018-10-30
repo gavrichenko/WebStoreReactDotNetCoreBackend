@@ -27,7 +27,7 @@ class FlowerCard extends Component {
 	  <div className="flowerCard">
 		<Card>
 			<div>
-				<Image src={image} />
+				<Image src={image} width={300} height={300}/>
 			</div>
 
 			<Card.Content>

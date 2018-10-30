@@ -35,12 +35,12 @@ class ProductFilter extends Component {
 				  name='price_high'
 				  active={activeItem === 'price_high'}
 				  onClick={this.handleItemClick}
-			  >Дешевле</Menu.Item>
+			  >По возрастанию цены</Menu.Item>
 			  <Menu.Item
 				  name='price_low'
 				  active={activeItem === 'price_low'}
 				  onClick={this.handleItemClick}
-			  >Дороже</Menu.Item>
+			  >По убыванию цены</Menu.Item>
 		  </Menu>
 		);
   }

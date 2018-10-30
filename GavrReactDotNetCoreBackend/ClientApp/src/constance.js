@@ -25,6 +25,7 @@ export const SET_FILTER_BY_QUERY = 'SET_FILTER_BY_QUERY';
 
 // cart
 export const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART';
+export const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART';
 
 // users for admin
 export const GET_ALL_USERS = 'GET_ALL_USERS';

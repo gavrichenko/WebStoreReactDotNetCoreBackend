@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { Menu, Icon } from 'semantic-ui-react'
 import UserMenu from "../UserMenu/UserMenu";
@@ -20,6 +21,7 @@ class Header extends Component {
 
   render() {
     const { activeItem } = this.state;
+    const { totalPrice } = this.props;
 
     return (
 
@@ -67,14 +69,14 @@ class Header extends Component {
 
           {/*right menu*/}
           <Menu.Menu position='right'>
-            <Link to="/basket" >
+            <Link to="/cart" >
               <Menu.Item
                 icon = 'shop'
                 name='Корзина'
                 active={activeItem === 'Корзина'}
                 onClick={this.handleItemClick}>
                 <Icon link name='shopping cart' size="large" />
-                <span>1500 руб</span>
+                <span>{totalPrice} руб</span>
               </Menu.Item>
             </Link>
 
@@ -103,4 +105,8 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default connect((state) => {
+	return {
+		totalPrice: state.cart.items.reduce((total, item) => total + item.price, 0),
+}
+})(Header)

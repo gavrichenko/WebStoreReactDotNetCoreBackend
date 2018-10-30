@@ -1,0 +1,11 @@
+.cartWrapper {
+	margin: 15px 40px;
+}
+
+
+
+@media (max-width: 800px) {
+	.cartWrapper {
+		margin: 15px 5px;
+	}
+}

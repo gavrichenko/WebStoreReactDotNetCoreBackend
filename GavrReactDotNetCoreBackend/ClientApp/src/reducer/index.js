@@ -2,15 +2,17 @@ import {combineReducers} from 'redux';
 import counterReducer from './counter';
 import articlesReducer from './articles';
 import filterReducer from './filters';
-import flowersReduser from './flowers';
-import userReduser from "./user";
-import adminReduser from "./admin";
+import flowersReducer from './flowers';
+import userReducer from "./user";
+import cartReducer from "./cart";
+import adminReducer from "./admin";
 
 export default combineReducers({
   count: counterReducer,
   articles: articlesReducer,
   filters: filterReducer,
-  flowers: flowersReduser,
-  userInfo: userReduser,
-  admin: adminReduser
+  flowers: flowersReducer,
+  userInfo: userReducer,
+  cart: cartReducer,
+  admin: adminReducer,
 });

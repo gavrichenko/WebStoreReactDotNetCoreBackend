@@ -43,7 +43,6 @@ class SearchExampleStandard extends Component {
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
       const isMatch = result => re.test(result.title);
 
-	 
       this.setState({
         isLoading: false,
         results: _.filter(this.changeKeysForEachElemnt(), isMatch),

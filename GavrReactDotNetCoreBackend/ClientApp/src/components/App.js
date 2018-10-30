@@ -12,6 +12,7 @@ import GeneralLanding from './GeneralLanding/GeneralLanding';
 import ContactsPage from './ContactsPage/ContactsPage';
 import PromotionPage from './PromotionPage/PromotionPage';
 import ShopPage from './ShopPage/ShopPage';
+import Cart from "./Cart/Cart";
 import AdminPage from './Admin/AdminPage/AdminPage';
 
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
             <Route path="/contacts" component={ContactsPage} />
             <Route path="/promotion" component={PromotionPage} />
             <Route path="/shop" component={ShopPage} />
+            <Route path="/cart" component={Cart} />
 			<Route path="/login" component={LoginPage} />
 			<Route path="/signup" component={SignUpPage} />
 			<Route path="/account" component={AccountPage} />
