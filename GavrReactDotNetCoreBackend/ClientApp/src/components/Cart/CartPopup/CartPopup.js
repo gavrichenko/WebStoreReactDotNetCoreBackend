@@ -15,12 +15,15 @@ class CartPopup extends Component {
 		const { cartItems, removeItemFromCart } = this.props;
 		return cartItems.map((item) => 
 				<List.Item>
-					<Image src= {item.image} width={100} height={100} />
+					<Image src= {item.image} width={110} height={110} />
 					<List.Content>
-						<h5>{item.name}</h5>				
+						<h5>{item.name}</h5>							
 						<List.Description>
-							<Icon name='ruble sign' />{item.price}
-						 </List.Description>					
+							{item.price}<Icon name='ruble sign' />					
+						</List.Description>		
+						<List.Description>
+							{item.count} шт
+						</List.Description>
 						<br />
 						<Button color='red' onClick={()=>removeItemFromCart(item.id)}>Удалить</Button>
 					</List.Content>					

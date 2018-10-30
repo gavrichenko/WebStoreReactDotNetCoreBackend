@@ -1,7 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, Image, Button, Icon, Grid, Input } from 'semantic-ui-react'
-import './CartItem.css'
+import { Card, Image, Button, Icon, Grid, Input } from 'semantic-ui-react';
+import { addItemToCart, removeItemFromCart } from "../../../AC/cart";
+import './CartItem.css';
 
 
 class CartItem extends Component {
@@ -10,15 +11,31 @@ class CartItem extends Component {
 		this.state = { isExpanded: false, };
 	};
 
-
 	toggleCardHeight = () => {
 		this.setState({ isExpanded: !this.state.isExpanded });
-	}
+	};
 
+	removeItem = () => {
+		const { id, removeItemFromCart } = this.props;
+		removeItemFromCart(id);
+	};
 
+	dereaseItemQuantity = () => {
+		const { id, count, removeItemFromCart } = this.props;
+		if (count >= 2) {
+			removeItemFromCart(id);
+		}
+		
+	};
+
+	increaseItemQuantity = () => {
+		const { addItemToCart, id, name, price, image, description, count, rating } = this.props;
+		const flowerObj = { id, name, price, image, description, count, rating };
+		addItemToCart(flowerObj);
+	};
 
 	render() {
-
+		const { id, name, price, image, description, count, rating } = this.props;
 		return (
 			<div className='cartItem'>
 				<Card.Group itemsPerRow='one'>
@@ -28,12 +45,13 @@ class CartItem extends Component {
 							<Grid doubling>
 								<Grid.Row centered >
 									<Grid.Column width={4} textAlign="center">
-										<Image floated='left' size='small' src='https://react.semantic-ui.com/images/avatar/large/steve.jpg' />
+										<Image floated='left' size='small' src={image} />
 									</Grid.Column>
 									<Grid.Column width={9}>
-										<Card.Header>Matthew Harris</Card.Header>
-										<Card.Meta>Co-Worker</Card.Meta>
-										<Card.Meta>Co-Wosadrker</Card.Meta>
+										<Card.Header>{name}</Card.Header>
+										<Card.Meta>Описание: {description}</Card.Meta>
+										<Card.Content>Цена: {price} руб.</Card.Content>
+										<Card.Content>Количество: {count} шт.</Card.Content>										
 									</Grid.Column>
 									<Grid.Column width={3}>
 										<div className="cart-buttons">
@@ -52,10 +70,10 @@ class CartItem extends Component {
 
 										<p className="cart-quantity-label">&nbsp;Количество:</p>
 
-										<Button icon onClick={this.reduceItemQuantity} className="cart-button">
+										<Button icon onClick={this.dereaseItemQuantity} className="cart-button">
 											<Icon name="minus" />
 										</Button>
-										<Input value={this.state.quantity} readOnly className="cart-quantity-input" />
+										<Input value={count} readOnly className="cart-quantity-input" />
 										<Button icon onClick={this.increaseItemQuantity} className="cart-button">
 											<Icon name="plus" />
 										</Button>
@@ -76,6 +94,6 @@ class CartItem extends Component {
 
 export default connect((state) => {
 	return {
-		firstNamedsfdsdsffdsdsf: state.userInfo.firstName,
+
 	}
-}, {})(CartItem);
+}, { addItemToCart, removeItemFromCart })(CartItem);

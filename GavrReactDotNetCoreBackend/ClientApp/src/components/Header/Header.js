@@ -116,6 +116,6 @@ class Header extends Component {
 
 export default connect((state) => {
 	return {
-		totalPrice: state.cart.items.reduce((total, item) => total + item.price, 0),
+		totalPrice: state.cart.items.reduce((total, item) => total + (item.price * item.count), 0),
 }
 })(Header)

@@ -14,7 +14,7 @@ class Cart extends Component {
 
 	getItemList() {
 		const { cartItems, removeItemFromCart } = this.props;
-		return cartItems.map((item) =>  <CartItem /> );
+		return cartItems.map((item) => <CartItem {...item} /> );
 	};
 
 	render() {
