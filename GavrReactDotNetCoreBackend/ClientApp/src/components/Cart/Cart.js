@@ -1,9 +1,10 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Cart.css';
-import { Card, Image, Button, Icon, Grid, Input } from 'semantic-ui-react'
+import { removeItemFromCart } from "../../AC/cart";
+import { Grid } from 'semantic-ui-react';
 import CartItem from "./CartItem/CartItem";
-
+import OrderInfo from "./OrderInfo/OrderInfo";
 
 class Cart extends Component {
 	constructor(props) {
@@ -11,21 +12,24 @@ class Cart extends Component {
 		this.state = {};
 	};
 
+	getItemList() {
+		const { cartItems, removeItemFromCart } = this.props;
+		return cartItems.map((item) =>  <CartItem /> );
+	};
 
 	render() {
 
 		return (
 			<div className='cartWrapper'>
+				<h1>Корзина</h1>
 				<Grid doubling stackable>
 					<Grid.Column width={9}>
-						<CartItem />
-						<CartItem />
-						<CartItem />
-						<CartItem />
-						<CartItem />
+
+					{this.getItemList()}
+
 					</Grid.Column>
 					<Grid.Column width={7}>
-						<h1>Общая информация о заказе</h1>
+						<OrderInfo />
 					</Grid.Column>
 				</Grid>
 			</div>
@@ -35,6 +39,7 @@ class Cart extends Component {
 
 export default connect((state) => {
 	return {
-		
+		countCartItems: state.cart.items.length,
+		cartItems: state.cart.items,
 	}
-}, {})(Cart);
+}, { removeItemFromCart })(Cart);

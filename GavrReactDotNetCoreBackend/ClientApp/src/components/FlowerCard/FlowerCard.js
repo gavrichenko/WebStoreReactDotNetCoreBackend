@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types'
-import { Card, Icon, Image, Button, Rating } from 'semantic-ui-react'
-import './FlowerCard.css'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { addItemToCart } from "../../AC/cart";
+import { Card, Icon, Image, Button, Rating } from 'semantic-ui-react';
+import './FlowerCard.css';
 
 class FlowerCard extends Component {
   static propTypes = {
@@ -14,9 +16,12 @@ class FlowerCard extends Component {
 	image: PropTypes.string,
 	};
 
-	handleClick = () => {
-		const {id, name, price, description, rating, image } = this.props;
+	handleClick = (e) => {
+		e.preventDefault();
+		const { id, name, price, description, rating, image } = this.props;	
 		console.log(id, name, price);
+		const itemObjForAddingToCart = { id, name, price, description, rating, image}
+		this.props.addItemToCart(itemObjForAddingToCart);
 	}
 
   render() {
@@ -39,8 +44,8 @@ class FlowerCard extends Component {
 			<Card.Content extra>
 				<Rating icon='star' rating={rating} maxRating={5} />
 					<Button className="flowerCard__shopBtn" animated='vertical' color='red' fluid onClick={this.handleClick} >
-					<Button.Content hidden>Купить</Button.Content>
-					<Button.Content visible>
+					<Button.Content hidden >Добавить в корзину</Button.Content>
+					<Button.Content visible >
 						<Icon name='shop' />
 						<span className="flowerCard_price">{price}</span>
 					</Button.Content>
@@ -53,4 +58,4 @@ class FlowerCard extends Component {
   }
 }
 
-export default FlowerCard
+export default connect(null, { addItemToCart })(FlowerCard);

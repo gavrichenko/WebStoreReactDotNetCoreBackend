@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
-import { Menu, Icon } from 'semantic-ui-react'
+import { Menu, Icon, Popup } from 'semantic-ui-react'
 import UserMenu from "../UserMenu/UserMenu";
+import CartPopup from "../Cart/CartPopup/CartPopup";
 import './Header.css'
 
 
@@ -69,17 +70,25 @@ class Header extends Component {
 
           {/*right menu*/}
           <Menu.Menu position='right'>
-            <Link to="/cart" >
-              <Menu.Item
-                icon = 'shop'
-                name='Корзина'
-                active={activeItem === 'Корзина'}
-                onClick={this.handleItemClick}>
-                <Icon link name='shopping cart' size="large" />
-                <span>{totalPrice} руб</span>
-              </Menu.Item>
-            </Link>
-
+            
+			<Popup
+			trigger={
+				<Link to="/cart" >
+					<Menu.Item
+						icon='shop'
+						name='Корзина'
+						active={activeItem === 'Корзина'}
+						onClick={this.handleItemClick}>
+						<Icon link name='shopping cart' size="large" />
+						<span>{totalPrice} руб</span>
+					</Menu.Item>
+				</Link>
+				}
+				content={<CartPopup />}
+				hoverable
+				flowing
+			/>
+            
 			<div hidden={this.isAuthenticated()}  >
 				<Link to="/login" >
 	              <Menu.Item icon = 'key'
