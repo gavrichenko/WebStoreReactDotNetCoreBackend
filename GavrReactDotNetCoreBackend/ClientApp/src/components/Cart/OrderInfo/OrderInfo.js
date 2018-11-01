@@ -2,8 +2,7 @@
 import { connect } from 'react-redux';
 import './OrderInfo.css';
 import { Container, Segment, Button } from 'semantic-ui-react';
-
-
+import axios from 'axios';
 
 class OrderInfo extends Component {
 	constructor(props) {
@@ -11,10 +10,13 @@ class OrderInfo extends Component {
 		this.state = {};
 	};
 
+	handleClick = () => {
+		axios.post(`https://ghostly-goblin-34386.herokuapp.com/telega`, { "text": `Заказ на сумму: ${this.props.totalPrice} рублей.` });
+	}
 
 	render() {
 		const { totalPrice, countItems } = this.props;
-		return (			
+		return (
 			<Container>
 				<h1>Ваш заказ</h1>
 				<Segment vertical>
@@ -22,7 +24,7 @@ class OrderInfo extends Component {
 					<h4>Сумма к оплате: {totalPrice} руб. </h4>
 				</Segment>
 				<Segment vertical>
-					<Button primary>Заказать</Button>
+					<Button primary onClick={this.handleClick}>Заказать</Button>
 				</Segment>
 			</Container>
 		)

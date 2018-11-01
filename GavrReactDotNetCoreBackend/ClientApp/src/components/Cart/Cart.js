@@ -25,7 +25,7 @@ class Cart extends Component {
 				</Message>
 			);
 		}
-		return cartItems.map((item) => <CartItem {...item} /> );
+		return cartItems.map((item) => <CartItem key={item.id} {...item} /> );
 	};
 
 	render() {

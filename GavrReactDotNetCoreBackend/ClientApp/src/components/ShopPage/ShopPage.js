@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import './ShopPage.css'
 import FlowersList from "../FlowersList/FlowersList";
 import ProductFilter from "../ProductFilter/ProductFilter";
-import {getFlowers} from "../../AC/index";
+import { getFlowers } from "../../AC/index";
 
 class ShopPage extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { isLoaded: false};
+		this.state = { isLoaded: false };
 	};
 
 	componentDidMount() {
@@ -27,13 +27,13 @@ class ShopPage extends Component {
 	};
 
 	render() {
-    return (
-      <div className="shop">
-        <ProductFilter />
-        <FlowersList />
-      </div>
-    )
-  }
+		return (
+			<div className="shop">
+				<ProductFilter />
+				<FlowersList />
+			</div>
+		)
+	}
 
 }
 
