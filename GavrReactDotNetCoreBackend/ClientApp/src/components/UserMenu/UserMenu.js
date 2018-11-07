@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUserInfo } from "../../AC/userActions";
+import { getUserInfo, signOut } from "../../AC/userActions";
 import { getUserRole } from "../../AC/rolesActions";
 import { Icon, Dropdown, Confirm } from 'semantic-ui-react'
 import { withRouter } from "react-router-dom";
@@ -30,9 +30,11 @@ class UserMenu extends Component {
 	handleOpenModal = () => this.setState({ open: true })
 
 	handleSignOut = () => {
+		const {signOut} = this.props;
 		this.setState({ open: false })
 		localStorage.removeItem('user');
 		this.props.history.push('/login');
+		signOut();
 	};
 
 	handleCancel = () => this.setState({ open: false })
@@ -87,4 +89,4 @@ export default connect((state) => {
 		lastName: state.userInfo.lastName,
 		roles: state.userInfo.roles,
 	}
-}, { getUserInfo, getUserRole })(withRouter(UserMenu));
+}, { getUserInfo, getUserRole, signOut })(withRouter(UserMenu));

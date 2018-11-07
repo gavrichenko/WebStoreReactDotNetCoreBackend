@@ -1,4 +1,4 @@
-import { GET_TOKEN, SIGN_UP, GET_USER_INFO, UPDATE_USER_INFO, GET_ALL_USERS, SORT_USERS, SEARCH_USER, TOGGLE_USERCARD_ADMIN} from "../constance";
+import { GET_TOKEN, SIGN_UP, SIGN_OUT, GET_USER_INFO, UPDATE_USER_INFO, GET_ALL_USERS, SORT_USERS, SEARCH_USER, TOGGLE_USERCARD_ADMIN} from "../constance";
 
 export function getToken(data) {
 	return {
@@ -15,6 +15,12 @@ export function signUp(data) {
 		callAPI: 'api/account/register',
 		typeOfMethod: 'post',
 		apiData: { data }
+	}
+}
+
+export function signOut() {
+	return {
+		type: SIGN_OUT,
 	}
 }
 

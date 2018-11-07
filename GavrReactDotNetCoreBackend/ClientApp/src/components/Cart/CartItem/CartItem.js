@@ -53,7 +53,7 @@ class CartItem extends Component {
 										<Card.Meta>Описание: {description}</Card.Meta>
 										<Card.Content>Цена: {price} руб.</Card.Content>
 										<Card.Content>Количество: {count} шт.</Card.Content>										
-										<Card.Content><b>Итого: {price * count} руб.</b>  ({price}*{count})</Card.Content>										
+										<Card.Content><b>Итого: {price * count} руб.</b></Card.Content>										
 									</Grid.Column>
 									<Grid.Column width={3}>
 										<div className="cart-buttons">

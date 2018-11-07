@@ -13,6 +13,7 @@ export const GET_TOKEN = 'GET_TOKEN';
 
 // register
 export const SIGN_UP = 'SIGN_UP';
+export const SIGN_OUT = 'SIGN_OUT';
 
 // user
 export const GET_USER_INFO = 'GET_USER_INFO';
@@ -33,6 +34,8 @@ export const SORT_USERS = 'SORT_USERS';
 export const SEARCH_USER = 'SEARCH_USER';
 export const TOGGLE_USERCARD_ADMIN = 'TOGGLE_USERCARD_ADMIN';
 
+// redirect
+export const REDIRECT_FROM_LOGIN_TO_CART = 'REDIRECT_FROM_LOGIN_TO_CART';
 
 // for loader component
 export const START = '_START';

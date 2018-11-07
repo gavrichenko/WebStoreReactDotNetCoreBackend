@@ -33,7 +33,7 @@ class LoginPage extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		const { getToken, getUserInfo, getUserRole } = this.props;
+		const { getToken, getUserInfo, getUserRole, isRedirectToCart } = this.props;
 
 		this.setState({ submitted: true });
 		const { username, password } = this.state;
@@ -54,6 +54,9 @@ class LoginPage extends Component {
 					const username = tokenData.responseAPI.username;
 					getUserInfo(username);
 					getUserRole(username);
+					if (isRedirectToCart){
+						return this.props.history.push('/cart');
+					}
 					this.props.history.push('/');
 				})
 				.catch(e => console.log(e));
@@ -124,4 +127,8 @@ class LoginPage extends Component {
   }
 
 }
-export default connect(null, { getToken, getUserInfo, getUserRole })(LoginPage);
+export default connect((state)=>{
+	return {
+		isRedirectToCart: state.redirect.fromLoginToCart,
+	}
+}, { getToken, getUserInfo, getUserRole })(LoginPage);

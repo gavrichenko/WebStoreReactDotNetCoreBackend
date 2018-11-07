@@ -1,6 +1,5 @@
-﻿using System.Security.Cryptography.Xml;
-using GavrReactDotNetCoreBackend.Models;
-using GavrReactDotNetCoreBackend.Sender.Telegram;
+﻿using GavrReactDotNetCoreBackend.Models;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace GavrReactDotNetCoreBackend.Controllers

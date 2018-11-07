@@ -1,4 +1,4 @@
-import { SUCCESS, FAIL, GET_TOKEN, GET_USER_INFO, GET_ROLE_BY_NAME, UPDATE_USER_INFO } from "../constance";
+import { SUCCESS, FAIL, GET_TOKEN, GET_USER_INFO, GET_ROLE_BY_NAME, UPDATE_USER_INFO, SIGN_OUT } from "../constance";
 
 const defaultState = {
 	isLoggedIn: false,
@@ -51,6 +51,8 @@ export default (userState = defaultState, action) => {
 		  city: responseAPI.city,
 		  phone: responseAPI.phone
 	  };
+
+	  case SIGN_OUT: return defaultState;
   }
   return userState;
 }
