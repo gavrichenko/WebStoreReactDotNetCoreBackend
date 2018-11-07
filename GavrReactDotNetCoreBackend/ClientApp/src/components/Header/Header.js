@@ -8,7 +8,10 @@ import './Header.css'
 
 
 class Header extends Component {
-  state = {};
+ 	constructor(props) {
+		super(props);
+		this.state = {};	
+	};
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
@@ -18,12 +21,22 @@ class Header extends Component {
 		  return true;
 	  }
 	  return false;
-  };
+	};
+
+	shouldComponentUpdate(nextProps, nextState){
+		if(this.props.userId !== nextProps.userId){
+			return true;
+		}
+		if (this.props.totalPrice !== nextProps.totalPrice){
+			return true;
+		}
+		return false;
+	}
 
   render() {
     const { activeItem } = this.state;
-    const { totalPrice } = this.props;
-
+		const { totalPrice } = this.props;
+		
     return (
 
       <header className="header" >
@@ -103,6 +116,7 @@ class Header extends Component {
 					name='userMenu'
 					onClick={this.handleItemClick} >
 					<UserMenu />
+					{console.log('RENDER')}
 				</Menu.Item>
 			</div>
 			
@@ -117,5 +131,6 @@ class Header extends Component {
 export default connect((state) => {
 	return {
 		totalPrice: state.cart.items.reduce((total, item) => total + (item.price * item.count), 0),
+		userId: state.userInfo.email,
 }
 })(Header)

@@ -16,10 +16,13 @@ class OrderInfo extends Component {
 		
 	}
 
-	handleClick = () => {
+	handleLogin = () => {
 		this.props.redirectFromLoginToCart(true);
-		// const telegramApi = 'https://ghostly-goblin-34386.herokuapp.com/telega';
-		// axios.post(telegramApi, { "text": `Заказ на сумму: ${this.props.totalPrice} рублей.` });
+	};
+
+	handleFastPurchase = () => {
+		const telegramApi = 'https://ghostly-goblin-34386.herokuapp.com/telega';
+		axios.post(telegramApi, { "text": `Заказ на сумму: ${this.props.totalPrice} рублей.` });
 	};
 
 	getLoginButton() {
@@ -31,7 +34,7 @@ class OrderInfo extends Component {
 			<Segment className='orderIndo__login'  vertical>
 					Уже покупали у нас?
 					<Link to="/login">
-						<Button basic color='blue' onClick={this.handleClick}>Войти</Button>	
+						<Button basic color='blue' onClick={this.handleLogin}>Войти</Button>	
 					</Link> 	
 			</Segment>
 		);
@@ -41,7 +44,7 @@ class OrderInfo extends Component {
 		if(this.props.countItems != 0){
 			return (
 				<Segment vertical>
-					<Button primary onClick={this.handleClick}>Заказать в один клик</Button>
+					<Button primary onClick={this.handleFastPurchase}>Заказать в один клик</Button>
 				</Segment>
 			);
 		}
