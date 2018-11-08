@@ -1,10 +1,10 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { redirectFromLoginToCart } from '../../../AC/redirectActions';
+import { openOrderInModal } from '../../../AC/cart';
 import './OrderInfo.css';
 import { Container, Segment, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 class OrderInfo extends Component {
 	constructor(props) {
@@ -12,17 +12,13 @@ class OrderInfo extends Component {
 		this.state = {};
 	};
 
-	componentDidMount(){
-		
-	}
-
 	handleLogin = () => {
 		this.props.redirectFromLoginToCart(true);
 	};
 
 	handleFastPurchase = () => {
-		const telegramApi = 'https://ghostly-goblin-34386.herokuapp.com/telega';
-		axios.post(telegramApi, { "text": `Заказ на сумму: ${this.props.totalPrice} рублей.` });
+		const { openOrderInModal } = this.props;
+		openOrderInModal(true);
 	};
 
 	getLoginButton() {
@@ -71,4 +67,4 @@ export default connect((state) => {
 		totalPrice: state.cart.items.reduce((total, item) => total + (item.price * item.count), 0),
 		countItems: state.cart.items.length,
 	}
-}, {redirectFromLoginToCart})(OrderInfo);
+}, {openOrderInModal, redirectFromLoginToCart})(OrderInfo);

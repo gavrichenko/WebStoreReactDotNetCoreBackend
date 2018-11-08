@@ -6,6 +6,7 @@ import { Grid, Message, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import CartItem from "./CartItem/CartItem";
 import OrderInfo from "./OrderInfo/OrderInfo";
+import FastPurchase from "./FastPurchase/FastPurchase";
 
 class Cart extends Component {
 	constructor(props) {
@@ -33,10 +34,16 @@ class Cart extends Component {
 		return (
 			<div className='cartWrapper'>
 				<h1>Корзина</h1>
+
+				<FastPurchase />
+
 				<Grid doubling stackable>
 					<Grid.Column width={9}>
 
-					{this.getItemList()}
+					<div className='orderList'>
+						{this.getItemList()}
+					</div>
+					
 
 					</Grid.Column>
 					<Grid.Column width={7}>

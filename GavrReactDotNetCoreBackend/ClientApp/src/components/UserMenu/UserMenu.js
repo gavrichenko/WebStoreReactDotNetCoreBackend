@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import { getUserInfo, signOut } from "../../AC/userActions";
 import { getUserRole } from "../../AC/rolesActions";
+import { getItemsFromLocalStorage } from "../../AC/cart";
 import { Icon, Dropdown, Confirm } from 'semantic-ui-react'
 import { withRouter } from "react-router-dom";
 import './UserMenu.css'
@@ -14,12 +15,13 @@ class UserMenu extends Component {
 	};
 
 	componentDidMount() {
+		const { getUserInfo, getUserRole, getItemsFromLocalStorage } = this.props;
 		const username = localStorage.getItem('user') !== null ? JSON.parse(localStorage.getItem('user')).username : null;
-		if (username !== null) {
-			const { getUserInfo, getUserRole } = this.props;
+		if (username !== null) {		
 			getUserInfo(username);
 			getUserRole(username);
 		}
+		getItemsFromLocalStorage();
 	};
 
 	handleClick = (e, { value }) => {
@@ -33,6 +35,8 @@ class UserMenu extends Component {
 		const {signOut} = this.props;
 		this.setState({ open: false })
 		localStorage.removeItem('user');
+		localStorage.removeItem('cart_items');
+		this.props.getItemsFromLocalStorage();
 		this.props.history.push('/login');
 		signOut();
 	};
@@ -89,4 +93,4 @@ export default connect((state) => {
 		lastName: state.userInfo.lastName,
 		roles: state.userInfo.roles,
 	}
-}, { getUserInfo, getUserRole, signOut })(withRouter(UserMenu));
+}, { getUserInfo, getUserRole, getItemsFromLocalStorage, signOut })(withRouter(UserMenu));
