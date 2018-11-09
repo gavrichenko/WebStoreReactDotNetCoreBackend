@@ -7,6 +7,7 @@ import userReducer from "./user";
 import cartReducer from "./cart";
 import adminReducer from "./admin";
 import redirectReducer from "./redirect";
+import orderReducer from "./order";
 
 export default combineReducers({
   count: counterReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   cart: cartReducer,
   admin: adminReducer,
   redirect: redirectReducer,
+  order: orderReducer,
 });
