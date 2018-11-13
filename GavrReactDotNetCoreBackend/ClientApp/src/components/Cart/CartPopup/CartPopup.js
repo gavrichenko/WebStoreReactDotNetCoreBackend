@@ -14,7 +14,7 @@ class CartPopup extends Component {
 	getItemList() {
 		const { cartItems, removeItemFromCart } = this.props;
 		return cartItems.map((item) =>
-			<List.Item>
+			<List.Item key={item.id}>
 				<Image src={item.image} width={110} height={110} />
 				<List.Content>
 					<h5>{item.name}</h5>

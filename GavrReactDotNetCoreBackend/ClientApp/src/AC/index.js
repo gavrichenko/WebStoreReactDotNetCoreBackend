@@ -11,8 +11,9 @@ export function getFlowers() {
 export function addFlower(data) {
   return {
     type: ADD_FLOWER,
-    callAPI: 'flowers/',
+    callAPI: 'api/product/',
     typeOfMethod: 'post',
+    isAuthorize: true,
     apiData: { data }
   }
 }
