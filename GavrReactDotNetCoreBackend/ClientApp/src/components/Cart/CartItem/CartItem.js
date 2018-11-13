@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, Image, Button, Icon, Grid, Input } from 'semantic-ui-react';
+import { Card, Image, Button, Icon, Grid, Input, Modal } from 'semantic-ui-react';
 import { addItemToCart, removeItemFromCart } from "../../../AC/cart";
 import './CartItem.css';
 
@@ -8,7 +8,7 @@ import './CartItem.css';
 class CartItem extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { isExpanded: false, };
+		this.state = { isExpanded: false, isZoomImageModalActive: false, };
 	};
 
 	toggleCardHeight = () => {
@@ -34,19 +34,36 @@ class CartItem extends Component {
 		addItemToCart(flowerObj);
 	};
 
+	handleZoomImageOpen = () => this.setState({isZoomImageModalActive: true})
+	handleZoomImageClose = () => this.setState({isZoomImageModalActive: false})
+  
+	getModalWithImage() {
+	  const { isZoomImageModalActive } = this.state;
+	  return (
+		<Modal
+		  open={isZoomImageModalActive}
+		  onClick={this.handleZoomImageClose}
+		  size='small'
+		  closeIcon
+		>
+		  <Image src={this.props.image} fluid/>
+		</Modal>
+	  )
+	}
+
 	render() {
 		const { id, name, price, image, description, count, rating } = this.props;
 
 		return (
 			<div className='cartItem'>
+				{this.getModalWithImage()}
 				<Card.Group itemsPerRow='one'>
 					<Card>
-
 						<Card.Content>
 							<Grid doubling>
 								<Grid.Row centered >
 									<Grid.Column width={4} textAlign="center">
-										<Image floated='left' size='small' src={image} />
+										<Image floated='left' size='small' src={image} onClick={this.handleZoomImageOpen} className='cartItem__image' />
 									</Grid.Column>
 									<Grid.Column width={9}>
 										<Card.Header>{name}</Card.Header>

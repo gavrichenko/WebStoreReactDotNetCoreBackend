@@ -1,3 +1,6 @@
+.cartItem__image {
+	cursor: zoom-in;
+}
 
 .cart-product, .cart-summary {
 	margin-top: 2.5em !important;

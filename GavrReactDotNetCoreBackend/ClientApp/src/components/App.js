@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-// import Counter from './Counter';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import LoginPage from "./LoginPage/LoginPage";
@@ -27,9 +26,9 @@ class App extends Component {
             <Route path="/promotion" component={PromotionPage} />
             <Route path="/shop" component={ShopPage} />
             <Route path="/cart" component={Cart} />
-			<Route path="/login" component={LoginPage} />
-			<Route path="/signup" component={SignUpPage} />
-			<Route path="/account" component={AccountPage} />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/signup" component={SignUpPage} />
+            <Route path="/account" component={AccountPage} />
             {/*only for admin*/}
             <Route path="/admin" component={AdminPage} />
           </ContentWrapper>

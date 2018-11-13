@@ -42,14 +42,14 @@ class FlowerCardAdmin extends Component {
 
   handlePostReq = () => {
     const { addFlower, loading, loaded } = this.props;
+    const {selectedImage, name, price, description, rating  } = this.state;
+
     const data = {
-      image: this.state.selectedImage,
-      isImageLoaded: false,
-      isPreviewExist: false,
-      name: this.state.name,
-      price: this.state.price,
-      description: this.state.description,
-      rating: this.state.rating,
+      image: selectedImage,
+      name,
+      price,
+      description,
+      rating,
     };
     if (!loading || !loaded) {
       addFlower(data)
