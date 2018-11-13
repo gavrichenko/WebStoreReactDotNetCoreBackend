@@ -7,6 +7,8 @@ export const CHANGE_SELECTION = 'CHANGE_SELECTION';
 export const GET_FLOWERS = 'GET_FLOWERS';
 export const GET_FLOWER = 'GET_FLOWER';
 export const ADD_FLOWER = 'ADD_FLOWER';
+export const UPLOAD_ITEM_IMAGE = 'UPLOAD_ITEM_IMAGE';
+
 
 // login
 export const GET_TOKEN = 'GET_TOKEN';

@@ -26,9 +26,10 @@ class AdminPage extends Component {
 				return (
 					<div>
 						<h1>Компонент 'Добавить товар'</h1>
+
 						<FlowerCardAdmin />
 					</div>
-					
+
 					// <FlowerCard
 					// 	name='Букетик'
 					// 	price={1100}

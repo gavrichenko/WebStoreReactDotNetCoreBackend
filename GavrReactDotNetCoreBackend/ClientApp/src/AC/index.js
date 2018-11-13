@@ -1,4 +1,4 @@
-import {GET_FLOWERS, GET_FLOWER, ADD_FLOWER} from "../constance";
+import {GET_FLOWERS, GET_FLOWER, ADD_FLOWER, UPLOAD_ITEM_IMAGE} from "../constance";
 
 export function getFlowers() {
   return {
@@ -14,6 +14,16 @@ export function addFlower(data) {
     callAPI: 'api/product/',
     typeOfMethod: 'post',
     isAuthorize: true,
+    apiData: { data }
+  }
+}
+
+export function uploadImage(data) {
+  return {
+    type: UPLOAD_ITEM_IMAGE,
+    callAPI: 'api/FileUpload',
+    typeOfMethod: 'post',
+    isAuthorize: false,
     apiData: { data }
   }
 }
