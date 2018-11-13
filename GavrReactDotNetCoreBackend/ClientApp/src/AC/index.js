@@ -1,4 +1,4 @@
-import {GET_FLOWERS, GET_FLOWER, ADD_FLOWER, UPLOAD_ITEM_IMAGE} from "../constance";
+import {GET_FLOWERS, GET_FLOWER, ADD_FLOWER, UPLOAD_ITEM_IMAGE, REMOVE_PRODUCT} from "../constance";
 
 export function getFlowers() {
   return {
@@ -32,5 +32,15 @@ export function getFlower(id) {
   return {
     type: GET_FLOWER,
     callAPI: `tasks/${id}`,
+  }
+}
+
+export function removeProduct(id) {
+  return {
+    type: REMOVE_PRODUCT,
+    callAPI: `api/product/${id}`,
+    typeOfMethod: 'delete',
+    isAuthorize: false,
+    apiData: id,
   }
 }

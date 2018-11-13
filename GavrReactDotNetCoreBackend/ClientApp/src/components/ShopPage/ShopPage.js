@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './ShopPage.css'
 import FlowersList from "../FlowersList/FlowersList";
 import ProductFilter from "../ProductFilter/ProductFilter";
-import { Dimmer, Header, Icon } from 'semantic-ui-react';
+import { Dimmer, Header, Icon, Loader } from 'semantic-ui-react';
 import { getFlowers } from "../../AC/index";
 import { closeSuccessNotify } from "../../AC/orderActions";
 
@@ -45,6 +45,7 @@ class ShopPage extends Component {
   render() {
     return (
       <div className="shop">
+        <Loader active={this.state.isLoaded} size='huge'>Loading</Loader>	
         <ProductFilter />
         <FlowersList />
         <Dimmer

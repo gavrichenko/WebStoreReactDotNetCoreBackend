@@ -2,7 +2,7 @@
 import './AdminPage.css'
 import UsersList from "../UsersList/UsersList";
 import FlowerCardAdmin from "../FlowerCardAdmin/FlowerCardAdmin";
-import FlowerCard from "../../FlowerCard/FlowerCard";
+import ItemListAdmin from "../ItemList/ItemListAdmin";
 import { Menu } from 'semantic-ui-react'
 
 class AdminPage extends Component {
@@ -20,7 +20,10 @@ class AdminPage extends Component {
 				return <UsersList />
 			case 'productsInfo':
 				return (
-					<h1>Компонент 'Информация о продуктах'</h1>
+					<div>
+						<h1>Компонент 'Информация о продуктах'</h1>
+						<ItemListAdmin />
+					</div>				
 				);
 			case 'addProduct':
 				return (
