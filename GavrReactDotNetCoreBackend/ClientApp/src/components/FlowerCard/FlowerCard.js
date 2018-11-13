@@ -2,21 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addItemToCart } from "../../AC/cart";
-import {
-  Card,
-  Icon,
-  Image,
-  Button,
-  Rating,
-  Dimmer,
-  Header
-} from "semantic-ui-react";
+import { Card, Icon, Image, Button, Rating, Dimmer, Header, Modal } from "semantic-ui-react";
 import "./FlowerCard.css";
 
 class FlowerCard extends Component {
   constructor(props) {
     super(props);
-    this.state = { active: false };
+    this.state = { active: false, isZoomImageModalActive: false };
   }
 
   static propTypes = {
@@ -50,6 +42,23 @@ class FlowerCard extends Component {
     }, 4000);
   };
 
+  handleZoomImageOpen = () => this.setState({isZoomImageModalActive: true})
+  handleZoomImageClose = () => this.setState({isZoomImageModalActive: false})
+
+  getModalWithImage() {
+    const { isZoomImageModalActive } = this.state;
+    return (
+      <Modal
+        open={isZoomImageModalActive}
+        onClick={this.handleZoomImageClose}
+        size='small'
+        closeIcon
+      >
+        <Image src={this.props.image} fluid/>
+      </Modal>
+    )
+  }
+
   render() {
     const { id, name, price, description, rating, image } = this.props;
     const { active } = this.state;
@@ -67,9 +76,11 @@ class FlowerCard extends Component {
           </Header>
         </Dimmer>
 
+        {this.getModalWithImage()}
+
         <Card>
-          <div>
-            <Image src={image} width={300} height={300} />
+          <div className='flowerCard__image'>
+            <Image src={image} width={300} height={300} onClick={this.handleZoomImageOpen} />
           </div>
 
           <Card.Content>

@@ -9,3 +9,7 @@
 .flowerCard {
     margin: 15px 15px;
 }
+
+.flowerCard__image {
+    cursor: zoom-in;
+}
