@@ -7,13 +7,6 @@ import './FlowerList.css';
 import _ from 'lodash';
 
 class FlowersList extends Component {
-  componentDidMount() {
-    const {getFlowers, getFlower, loading, loaded} = this.props;
-    console.log('getting flowers list');
-    if (!loading || ! loaded) {
-    //  getFlowers();
-    }
-  }
 
   render() {
     const {loading} = this.props;
@@ -38,7 +31,7 @@ class FlowersList extends Component {
         description = {el.description}
         rating = {el.rating}
         comments = {el.comments}
-		image={el.image}
+		    image={el.image}
 		/>);
   };
 }

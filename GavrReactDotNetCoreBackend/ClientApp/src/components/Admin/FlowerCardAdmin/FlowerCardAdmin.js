@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { Card, Icon, Image, Button, Rating, Input } from 'semantic-ui-react'
+import { Card, Icon, Image, Button, Rating, Input,Dimmer, Header } from 'semantic-ui-react'
 import './FlowerCardAdmin.css'
 import { connect } from "react-redux";
 import { getFlower, getFlowers, addFlower, uploadImage } from "../../../AC";
@@ -20,6 +20,7 @@ class FlowerCardAdmin extends Component {
       selectedImage: null,
       preLoad: false,
       isImageLoaded: false,
+      isSuccessMsgShow: false,
       name: '',
       price: '',
       description: '',
@@ -32,13 +33,7 @@ class FlowerCardAdmin extends Component {
   handleChangeDescription = e => { this.setState({ description: e.target.value }) };
   handleChangeRating = (e, { rating, maxRating }) => this.setState({ rating, maxRating });
 
-  handleGetReq = () => {
-    const { getFlowers, loading, loaded } = this.props;
-    console.log('getting flowers list');
-    if (!loading || !loaded) {
-      getFlowers();
-    }
-  };
+  handleCloseDimmer = () => this.setState({isSuccessMsgShow: false})
 
   handlePostReq = () => {
     const { addFlower, loading, loaded } = this.props;
@@ -53,6 +48,7 @@ class FlowerCardAdmin extends Component {
     };
     if (!loading || !loaded) {
       addFlower(data)
+      .then(()=> this.setState({isSuccessMsgShow: true}))   
     }
   };
 
@@ -102,6 +98,16 @@ class FlowerCardAdmin extends Component {
     const commentsList = this.props.comments;
     return (
       <div className="flowerCardAdmin">
+        <Dimmer 
+          active={this.state.isSuccessMsgShow}
+          onClickOutside={this.handleCloseDimmer}
+          page
+        >
+          <Header as="h2" icon inverted>
+            <Icon loading name="sync" />
+            Товар успешно добавлен в магазин!
+          </Header>
+        </Dimmer>
         <Card>
           <div className='flowerCardAdmin__uploadImage'>
             {this.getImage()}

@@ -25,16 +25,9 @@ class AdminPage extends Component {
 			case 'addProduct':
 				return (
 					<div>
-						<h1>Компонент 'Добавить товар'</h1>
-
+						<h1>Добавление нового товара</h1>
 						<FlowerCardAdmin />
 					</div>
-
-					// <FlowerCard
-					// 	name='Букетик'
-					// 	price={1100}
-					// 	description='описание'
-					// />
 				);
 			default:
 		}
