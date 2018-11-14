@@ -4,14 +4,16 @@ using GavrReactDotNetCoreBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GavrReactDotNetCoreBackend.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20181114144717_OrdersTableTest9")]
+    partial class OrdersTableTest9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,17 +54,21 @@ namespace GavrReactDotNetCoreBackend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("OrderId");
+                    b.Property<string>("OrderId");
 
-                    b.Property<int?>("ProductId");
+                    b.Property<int?>("OrderId1");
+
+                    b.Property<string>("ProductId");
+
+                    b.Property<int?>("ProductId1");
 
                     b.Property<int>("Quantity");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrderId1");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId1");
 
                     b.ToTable("OrderItems");
                 });
@@ -79,7 +85,8 @@ namespace GavrReactDotNetCoreBackend.Migrations
 
                     b.Property<string>("Phone");
 
-                    b.Property<DateTime?>("PurchaseDate");
+                    b.Property<DateTime?>("PurchaseDate")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -99,8 +106,6 @@ namespace GavrReactDotNetCoreBackend.Migrations
                     b.Property<string>("Name");
 
                     b.Property<int>("Price");
-
-                    b.Property<int>("Quantity");
 
                     b.Property<int>("Rating");
 
@@ -283,11 +288,11 @@ namespace GavrReactDotNetCoreBackend.Migrations
                 {
                     b.HasOne("GavrReactDotNetCoreBackend.Models.OrderModel", "Order")
                         .WithMany("Items")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId1");
 
                     b.HasOne("GavrReactDotNetCoreBackend.Models.ProductModel", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

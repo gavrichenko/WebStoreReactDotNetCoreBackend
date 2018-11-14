@@ -4,14 +4,16 @@ using GavrReactDotNetCoreBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GavrReactDotNetCoreBackend.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20181114145443_OrdersTableTest10")]
+    partial class OrdersTableTest10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,8 @@ namespace GavrReactDotNetCoreBackend.Migrations
 
                     b.Property<string>("Phone");
 
-                    b.Property<DateTime?>("PurchaseDate");
+                    b.Property<DateTime?>("PurchaseDate")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -99,8 +102,6 @@ namespace GavrReactDotNetCoreBackend.Migrations
                     b.Property<string>("Name");
 
                     b.Property<int>("Price");
-
-                    b.Property<int>("Quantity");
 
                     b.Property<int>("Rating");
 
