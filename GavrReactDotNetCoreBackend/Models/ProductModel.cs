@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GavrReactDotNetCoreBackend.Models
 {
@@ -11,6 +12,5 @@ namespace GavrReactDotNetCoreBackend.Models
         public string Description { get; set; }
         public string Image { get; set; }     
         public int Rating { get; set; }
-        public int Quantity { get; set; }
     }
 }

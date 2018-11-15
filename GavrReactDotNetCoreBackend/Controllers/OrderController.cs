@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GavrReactDotNetCoreBackend.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿using GavrReactDotNetCoreBackend.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GavrReactDotNetCoreBackend.Controllers
 {
@@ -13,66 +13,69 @@ namespace GavrReactDotNetCoreBackend.Controllers
     public class OrderController : Controller
     {
         private readonly ApplicationContext _appDbContext;
+        private readonly UserManager<User> _userManager;
 
-        public OrderController(ApplicationContext appDbContext)
+        public OrderController(UserManager<User> userManager, ApplicationContext appDbContext)
         {
             _appDbContext = appDbContext;
+            _userManager = userManager;
         }
-
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> CreateProduct([FromBody]OrderModel model)
+        public async Task<IActionResult> CreateProduct([FromBody] OrderModel model)
         {
-            try
-            {
             var productsColection = new List<ProductModel>();
+            User customer = null;
+
+            // check user
+            if (model.isLogged)
+            {
+                var user = await this._userManager.FindByNameAsync(model.Customer);
+                if (user == null)
+                {
+                    return this.NotFound($"User {model.Customer} was not found");
+                }
+
+                customer = user;
+            }
+
+            // creating order
+            var order = new OrderModel()
+            {
+                AdditionalInfo = model.AdditionalInfo,
+                Customer = model.Customer,
+                Phone = model.Phone,
+                PurchaseDate = DateTime.Now,
+            };
+            if (model.isLogged)
+            {
+                order.isLogged = true;
+                order.Identity = customer;
+            }
+            await this._appDbContext.Orders.AddAsync(order);
+
+
 
             foreach (var item in model.Items)
             {
+                // check product
                 var product = _appDbContext.Products.Find(item.Product.Id);
                 if (product == null)
                 {
-                    return this.BadRequest($"Product with ID '{item.Product.Id}' was not found");
-                }
-                else
-                {
-                    product.Quantity = item.Product.Quantity;
-                    productsColection.Add(product);
-                }
-            }
-                var order = new OrderModel()
-                {
-                    AdditionalInfo = model.AdditionalInfo,
-                    Customer = model.Customer,
-                    Phone = model.Phone,
-                    PurchaseDate = DateTime.Now,
-                };
-                await this._appDbContext.Orders.AddAsync(order);
-                await this._appDbContext.SaveChangesAsync();
+                    return this.NotFound($"Product with ID '{item.Product.Id}' was not found");
+                }            
+                productsColection.Add(product);
 
-                foreach (var product in productsColection)
-                {
-                    var orderItem = new OrderItemModel()
-                    {
-                        Product = product,
-                        Order = order,
-                        Quantity = product.Quantity,
-                    };           
-                    await this._appDbContext.OrderItems.AddAsync(orderItem);
-                    await this._appDbContext.SaveChangesAsync();
-                }
+                //creating orderItem
+                var orderItem = new OrderItemModel() { Product = product, Order = order, Quantity = item.Quantity };
+                await this._appDbContext.OrderItems.AddAsync(orderItem);
 
-                await this._appDbContext.SaveChangesAsync();
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                this.BadRequest(e);
-                throw;
-            }
-            return this.Ok();
 
+            await this._appDbContext.SaveChangesAsync();
+
+            return this.Created("orderId", new {orderId = order.Id});
         }
     }
 }
