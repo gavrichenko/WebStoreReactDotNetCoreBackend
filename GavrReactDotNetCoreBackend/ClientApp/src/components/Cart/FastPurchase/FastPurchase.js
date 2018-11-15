@@ -35,23 +35,45 @@ class FastPurchase extends Component {
     return openOrderInModal(false);
   }
 
+  dataPreparation(){
+    const { name, phone } = this.state;
+    const { cartItems } = this.props;
+    const itemsObj = cartItems.map((item)=>{
+      return {
+        "product": {
+          "id": item.id
+        },
+        "quantity": item.count  
+      };
+    });
+
+    return {
+      isLogged: false,
+      customer: name,
+      phone: phone,
+      additionalInfo: "todo",
+      items: itemsObj,
+    }
+  };
+
   handleConfirmOrder = () => {
     const { name, phone } = this.state;
-    const { cartItems, sendOrder, history, getItemsFromLocalStorage } = this.props;
+    const { totalPrice, sendOrder, history, getItemsFromLocalStorage } = this.props;
     if (name.length > 1 && phone.length === 11) {
       this.setState({ isValid: true });
-      sendOrder({ name, phone, cartItems })
-      // .then((data)=>{
-      // }) 
-      // .catch(e=>console.log(e))
-      this.handleClose();
-      localStorage.removeItem('cart_items');
-      getItemsFromLocalStorage();
-      history.push('/shop');
 
-      // send telegram notification
-      const telegramApi = 'https://ghostly-goblin-34386.herokuapp.com/telega';
-      axios.post(telegramApi, { "text": `${this.state.name}(${this.state.phone}) сделал заказ на сумму: ${this.props.totalPrice} рубля.` });
+      sendOrder(this.dataPreparation())
+        .then((res) => {
+          const orderId = res.responseAPI.orderId
+          this.handleClose();
+          localStorage.removeItem('cart_items');
+          getItemsFromLocalStorage();
+          history.push('/shop');
+          // send telegram notification
+          const telegramApi = 'https://ghostly-goblin-34386.herokuapp.com/telega';
+          axios.post(telegramApi, { "text": `${this.state.name}(${this.state.phone}) сделал заказ на сумму: ${totalPrice} рубля. Id заказа: ${orderId}` });
+        })
+
     } else {
       this.setState({ isValid: false })
     }
@@ -117,5 +139,6 @@ export default connect((state) => {
     cartItems: state.cart.items,
     totalPrice: state.cart.items.reduce((total, item) => total + (item.price * item.count), 0),
     countItems: state.cart.items.length,
+
   }
 }, { openOrderInModal, sendOrder, getItemsFromLocalStorage })(withRouter(FastPurchase));

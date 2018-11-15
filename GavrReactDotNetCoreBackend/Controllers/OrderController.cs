@@ -53,9 +53,8 @@ namespace GavrReactDotNetCoreBackend.Controllers
                 order.isLogged = true;
                 order.Identity = customer;
             }
+
             await this._appDbContext.Orders.AddAsync(order);
-
-
 
             foreach (var item in model.Items)
             {
@@ -64,13 +63,13 @@ namespace GavrReactDotNetCoreBackend.Controllers
                 if (product == null)
                 {
                     return this.NotFound($"Product with ID '{item.Product.Id}' was not found");
-                }            
+                }
+
                 productsColection.Add(product);
 
                 //creating orderItem
-                var orderItem = new OrderItemModel() { Product = product, Order = order, Quantity = item.Quantity };
+                var orderItem = new OrderItemModel() {Product = product, Order = order, Quantity = item.Quantity};
                 await this._appDbContext.OrderItems.AddAsync(orderItem);
-
             }
 
             await this._appDbContext.SaveChangesAsync();

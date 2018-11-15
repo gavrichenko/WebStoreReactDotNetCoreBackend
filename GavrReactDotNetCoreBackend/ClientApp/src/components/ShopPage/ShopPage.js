@@ -56,6 +56,8 @@ class ShopPage extends Component {
           <Header as="h2" icon inverted>
             <Icon name="heart" />
             Cпасибо за заказ!
+            <br />
+            Номер заказа: {this.props.orderId}
             <Header.Subheader>
               Менеджер нашего магазина свяжется с вами для уточнения деталей
               заказа.
@@ -71,5 +73,6 @@ export default connect((state) => {
 	return {
 		flowersData: state.flowers.data,
 		successNotifyData: {isNew: state.order.isNew, isSuccess: state.order.isSuccess},
+		orderId: state.order.isSuccess ? state.order.orderData.orderId : ''
 	}
 }, { getFlowers, closeSuccessNotify })(ShopPage);

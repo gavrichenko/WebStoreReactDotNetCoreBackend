@@ -1,9 +1,12 @@
 import { SEND_ORDER, CLOSE_SUCCESS_NOTIFICATION, SUCCESS } from "../constance";
 
-export function sendOrder(orderData) {
+export function sendOrder(data) {
 	return {
 		type: SEND_ORDER,
-		payload: orderData,
+		callAPI: 'api/order',
+		isAuthorize: false,
+		typeOfMethod: 'post',
+		apiData: { data }
 	}
 };
 
