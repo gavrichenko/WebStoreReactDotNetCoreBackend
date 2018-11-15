@@ -73,6 +73,6 @@ export default connect((state) => {
 	return {
 		flowersData: state.flowers.data,
 		successNotifyData: {isNew: state.order.isNew, isSuccess: state.order.isSuccess},
-		orderId: state.order.isSuccess ? state.order.orderData.orderId : ''
+		orderId: state.order.isSuccess ? state.order.orderNumber.orderId : ''
 	}
 }, { getFlowers, closeSuccessNotify })(ShopPage);

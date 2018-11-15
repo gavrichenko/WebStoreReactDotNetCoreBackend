@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import './AdminPage.css'
 import UsersList from "../UsersList/UsersList";
+import OrdersList from "../OrdersList/OrdersList";
 import FlowerCardAdmin from "../FlowerCardAdmin/FlowerCardAdmin";
 import ItemListAdmin from "../ItemList/ItemListAdmin";
 import { Menu } from 'semantic-ui-react'
@@ -32,6 +33,8 @@ class AdminPage extends Component {
 						<FlowerCardAdmin />
 					</div>
 				);
+			case 'orders':
+				return <OrdersList />
 			default:
 		}
 	};
@@ -56,6 +59,12 @@ class AdminPage extends Component {
 						content='Добавить товар'
 						name='addProduct'
 						active={activeItem === 'addProduct'}
+						onClick={this.handleItemClick}
+					/>
+					<Menu.Item
+						content='Заказы'
+						name='orders'
+						active={activeItem === 'orders'}
 						onClick={this.handleItemClick}
 					/>
 				</Menu>

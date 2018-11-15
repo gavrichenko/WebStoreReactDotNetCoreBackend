@@ -52,7 +52,7 @@ class CartItem extends Component {
 	}
 
 	render() {
-		const { id, name, price, image, description, count, rating } = this.props;
+		const { id, name, price, image, description, count, rating, isOpenInOrderCard } = this.props;
 
 		return (
 			<div className='cartItem'>
@@ -72,16 +72,20 @@ class CartItem extends Component {
 										<Card.Content>Количество: {count} шт.</Card.Content>										
 										<Card.Content><b>Итого: {price * count} руб.</b></Card.Content>										
 									</Grid.Column>
-									<Grid.Column width={3}>
-										<div className="cart-buttons">
-											<Button floated="right" icon className="cart-delete" onClick={this.removeItem}>
-												<Icon name="trash" />
-											</Button>
-											<Button floated="right" icon onClick={this.toggleCardHeight} color="purple">
-												<Icon name="pencil" />
-											</Button>							
-										</div>
+								   
+									<Grid.Column  width={3}>
+										{isOpenInOrderCard ? null : (   
+											<div className="cart-buttons">
+												<Button  floated="right" icon className="cart-delete" onClick={this.removeItem}>
+													<Icon name="trash" />
+												</Button>
+												<Button floated="right" icon onClick={this.toggleCardHeight} color="purple">
+													<Icon name="pencil" />
+												</Button>							
+											</div>
+										)}
 									</Grid.Column>
+									
 								</Grid.Row>
 
 								{this.state.isExpanded ? (
@@ -113,6 +117,6 @@ class CartItem extends Component {
 
 export default connect((state) => {
 	return {
-
+		isOpenInOrderCard: state.order.isOrderCardOpen,
 	}
 }, { addItemToCart, removeItemFromCart })(CartItem);
