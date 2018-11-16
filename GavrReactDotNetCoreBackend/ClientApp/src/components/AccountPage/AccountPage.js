@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
 import UserInfo from "./UserInfo/UserInfo";
+import OrdersInfo from "./OrdersInfo/OrdersInfo";
 import { withRouter } from "react-router-dom";
 import './AccountPage.css'
 
@@ -22,10 +23,8 @@ class AccountPage extends Component {
 			return (
 				<h1>Компонент 'Смена пароля'</h1>
 			);
-		case 'someInfo':
-			return (
-				<h1>Компонент 'Информация о счете'</h1>
-			);
+		case 'ordersInfo':
+			return <OrdersInfo />;
 		default:
 		}
 	};
@@ -47,9 +46,9 @@ class AccountPage extends Component {
 						onClick={this.handleItemClick}
 					/>
 					<Menu.Item
-						content='Информация о счете'
-						name='someInfo'
-						active={activeItem === 'someInfo'}
+						content='Информация о заказах'
+						name='ordersInfo'
+						active={activeItem === 'ordersInfo'}
 						onClick={this.handleItemClick}
 					/>
 				</Menu>	

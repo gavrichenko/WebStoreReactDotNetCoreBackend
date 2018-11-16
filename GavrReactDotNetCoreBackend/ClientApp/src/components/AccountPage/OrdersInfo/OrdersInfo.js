@@ -1,17 +1,15 @@
-﻿import React, { Component } from 'react';
+import React, { Component } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { getOrderListWithPrice, getOrderDetails, isOrderCartOpen } from "../../../AC/orderActions";
-import UserSearch from "../UserSearch/UserSearch";
-import OrderCard from "../OrderCard/OrderCard";
-import { Button, Loader, Table } from 'semantic-ui-react';
-
 import { withRouter } from "react-router-dom";
-import './OrdersList.css';
+import { getOrdersListByUser, getOrderDetails, isOrderCartOpen } from "../../../AC/orderActions";
+import { Loader, Table } from 'semantic-ui-react';
+// import UserSearch from "../UserSearch/UserSearch";
+import OrderCard from "../../Admin/OrderCard/OrderCard";
 
 
-class OrdersList extends Component {
+class OrdersInfo extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -20,10 +18,10 @@ class OrdersList extends Component {
 	};
 
 	componentDidMount() {
-		const { getOrderListWithPrice } = this.props;
+		const { getOrdersListByUser, username } = this.props;
 		this.setState({ isLoaded: true });
 
-		getOrderListWithPrice()
+		getOrdersListByUser(username)
 		.then(() => {
 			this.setState({isLoaded: false});
 		});
@@ -38,7 +36,7 @@ class OrdersList extends Component {
 	}
 
 	render() {
-		const {orders, totalPrice} = this.props;			
+		const {orders} = this.props;			
 		const { isLoaded } = this.state;
 		const preparedOrders = orders === null ? 'loading_orders': orders;
 		return (
@@ -46,9 +44,9 @@ class OrdersList extends Component {
 
 				<Loader active={isLoaded} size='big' />
 				<OrderCard />
-				<UserSearch />
-				<h4>Всего заказов: {orders.length} шт.</h4>  
-				<h4>Общая сумма заказов: {totalPrice} руб.</h4>  
+			{!this.props.orders.length ? (
+				<h1>Вы ещё не сделали ни одного заказа.</h1>
+			) : (
 				<Table sortable celled selectable>
 					<Table.Header>
 						<Table.Row>
@@ -70,17 +68,20 @@ class OrdersList extends Component {
 						</Table.Row>
 					</Table.Header>
 					<Table.Body >
-						{_.map(preparedOrders, ({id, customer, phone, purchaseDate, totalPrice }) => (
+						{_.map(preparedOrders, ({id, customer, phone, purchaseDate, items }) => (
 							<Table.Row key={id} onClick={() => this.handleRowClick(id)}>
 								<Table.Cell>{id}</Table.Cell>
 								<Table.Cell>{customer}</Table.Cell>
 								<Table.Cell>{phone}</Table.Cell>
 								<Table.Cell>{moment(purchaseDate).format('DD/MM/YY HH:mm')}</Table.Cell>
-								<Table.Cell>{totalPrice}</Table.Cell>
+								<Table.Cell>{items.reduce((total, item) =>
+ 									total + (item.quantity * item.product.price), 0)}
+								</Table.Cell>
 							</Table.Row>
 						))}
 					</Table.Body>
 				</Table>
+				)}
 			</div>		
 		)	
 	};
@@ -88,7 +89,7 @@ class OrdersList extends Component {
 
 export default connect((state) => {
 	return {
-		orders: state.order.adminOrdersList,
-		totalPrice: state.order.adminOrdersTotalPrice,
+		orders: state.order.userOrders,
+		username: state.userInfo.email,
 	}	
-}, { getOrderListWithPrice, getOrderDetails, isOrderCartOpen })(withRouter(OrdersList));
+}, { getOrdersListByUser, getOrderDetails, isOrderCartOpen })(OrdersInfo);

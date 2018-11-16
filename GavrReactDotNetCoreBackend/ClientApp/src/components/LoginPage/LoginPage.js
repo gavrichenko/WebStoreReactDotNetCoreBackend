@@ -82,16 +82,6 @@ class LoginPage extends Component {
 					  </Header>
 					  <Form size='large' onSubmit={this.handleSubmit} >
 
-						  <h3>admin@admin.com</h3>
-						  <h3>paswrd123</h3>
-
-						  <div>
-							  <small>You are running this application in <b>{process.env.NODE_ENV}</b> mode.</small>
-							  <form>
-								  <input type="hidden" defaultValue={process.env.REACT_APP_SECRET_CODE} />
-							  </form>
-						  </div>
-
 						  <Segment stacked>
 							  <Form.Input
 								  name="username"
@@ -122,6 +112,19 @@ class LoginPage extends Component {
 					  </Message>
 				  </Grid.Column>
 			  </Grid>
+			  
+			  <b>admin@admin.com</b> <br />
+			  <b>paswrd123</b><br />
+			  <br />
+			  <b>user@user.com</b> <br />
+			  <b>paswrd123</b>
+			  <br />
+			  <div>
+				  <small>You are running this application in <b>{process.env.NODE_ENV}</b> mode.</small>
+				  <form>
+					  <input type="hidden" defaultValue={process.env.REACT_APP_SECRET_CODE} />
+				  </form>
+			  </div>
 		  </div>
     )
   }

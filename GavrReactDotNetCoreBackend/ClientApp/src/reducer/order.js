@@ -1,5 +1,5 @@
 import { SEND_ORDER, CLOSE_SUCCESS_NOTIFICATION, GET_ORDERS_LIST_WITH_PRICE,
-	 GET_ORDER_DETAILS, IS_ORDER_CARD_OPEN, START, SUCCESS, FAIL } from "../constance";
+	 GET_ORDER_DETAILS, IS_ORDER_CARD_OPEN, GET_ORDERS_LIST_BY_USER, START, SUCCESS, FAIL } from "../constance";
 
 const defaultState = {
 	isSuccess: false,
@@ -9,6 +9,7 @@ const defaultState = {
 	adminOrdersList: [],
 	adminOrdersTotalPrice: null,
 	isOrderCardOpen: false,
+	userOrders: [],
 };
 
 export default (state = defaultState, action) => {
@@ -28,6 +29,10 @@ export default (state = defaultState, action) => {
 			...state,
 			adminOrdersList: responseAPI.orders,
 			adminOrdersTotalPrice: responseAPI.totalPrice,
+		};
+		case GET_ORDERS_LIST_BY_USER + SUCCESS: return {
+			...state,
+			userOrders: responseAPI,
 		};
 		case CLOSE_SUCCESS_NOTIFICATION: return {
 			...state,

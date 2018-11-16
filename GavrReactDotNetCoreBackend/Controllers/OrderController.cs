@@ -118,7 +118,7 @@ namespace GavrReactDotNetCoreBackend.Controllers
             var orders = await this._appDbContext.Orders
                 .Include(o => o.Items)
                 .ThenInclude(i => i.Product)
-                .Where(u => u.Customer == userName)
+                .Where(u => u.Customer == userName && u.isLogged == true)
                 .ToListAsync();
 
             var res = new ArrayList();

@@ -1,5 +1,5 @@
 import { SEND_ORDER, CLOSE_SUCCESS_NOTIFICATION, GET_ORDERS_LIST_WITH_PRICE,
-	IS_ORDER_CARD_OPEN, GET_ORDER_DETAILS, } from "../constance";
+	IS_ORDER_CARD_OPEN, GET_ORDER_DETAILS, GET_ORDERS_LIST_BY_USER} from "../constance";
 
 export function sendOrder(data) {
 	return {
@@ -15,6 +15,15 @@ export function getOrderListWithPrice() {
 	return {
 		type: GET_ORDERS_LIST_WITH_PRICE,
 		callAPI: 'api/order/getAllWithPrice',
+		isAuthorize: false,
+		typeOfMethod: 'get',
+	}
+};
+
+export function getOrdersListByUser(userName) {
+	return {
+		type: GET_ORDERS_LIST_BY_USER,
+		callAPI: `api/order/user/${userName}`,
 		isAuthorize: false,
 		typeOfMethod: 'get',
 	}

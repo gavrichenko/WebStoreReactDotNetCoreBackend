@@ -35,6 +35,10 @@ class FastPurchase extends Component {
     return openOrderInModal(false);
   }
 
+  isLogged() {
+    return localStorage.getItem('user') !== null ? true : false;
+  };
+
   dataPreparation(){
     const { name, phone } = this.state;
     const { cartItems } = this.props;
@@ -48,7 +52,7 @@ class FastPurchase extends Component {
     });
 
     return {
-      isLogged: false,
+      isLogged: this.isLogged(),
       customer: name,
       phone: phone,
       additionalInfo: "todo",
@@ -84,6 +88,15 @@ class FastPurchase extends Component {
     return cartItems.map((item) => <CartItem key={item.id} {...item} />);
   };
 
+  getUserNameInput() {
+    const { username } = this.props;
+    if (this.isLogged()){
+      this.state.name = username;
+      return (<Form.Input fluid label="Имя" value={username}  />)
+    } 
+    return (<Form.Input fluid label="Имя" placeholder="Ваше имя" error={this.state.isNameError} onChange={this.handleNameChange} />)
+  }
+
   render() {
     const { isOpen, totalPrice, countItems } = this.props;
     return (
@@ -98,7 +111,7 @@ class FastPurchase extends Component {
             </h4>
             <Form>
               <Form.Group widths="equal">
-                <Form.Input fluid label="Имя" placeholder="Ваше имя" error={this.state.isNameError} onChange={this.handleNameChange} />
+                {this.getUserNameInput()}
                 <Form.Field>
                   <MaskedInputPhone label='Телефон' placeholder='Ваш телефон' updateData={this.updateData} />
                 </Form.Field>
@@ -139,6 +152,6 @@ export default connect((state) => {
     cartItems: state.cart.items,
     totalPrice: state.cart.items.reduce((total, item) => total + (item.price * item.count), 0),
     countItems: state.cart.items.length,
-
+    username: state.userInfo.email,
   }
 }, { openOrderInModal, sendOrder, getItemsFromLocalStorage })(withRouter(FastPurchase));
