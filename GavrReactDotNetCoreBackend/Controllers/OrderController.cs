@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -106,6 +107,43 @@ namespace GavrReactDotNetCoreBackend.Controllers
             }
 
             return this.NotFound($"Order with ID '{id}' was not found");
+        }
+
+        [AllowAnonymous]
+        [Route("user/{userName}")]
+        [HttpGet]
+        public async Task<IActionResult> GetOrdersByCustomer([FromRoute] string userName)
+        {
+  
+            var orders = await this._appDbContext.Orders
+                .Include(o => o.Items)
+                .ThenInclude(i => i.Product)
+                .Where(u => u.Customer == userName)
+                .ToListAsync();
+
+            var res = new ArrayList();
+
+            foreach (var order in orders)
+            {
+                var items = this._appDbContext.OrderItems.Include(i => i.Product)
+                    .Where(i => i.Order.Id == order.Id)
+                    .ToList()
+                    .Select(model => new { model.Quantity, model.Product });
+
+                var ItemsOrder = new
+                {
+                    order.Id,
+                    order.PurchaseDate,
+                    order.Customer,
+                    order.Phone,
+                    order.AdditionalInfo,
+                    items
+                };
+
+                res.Add(ItemsOrder);
+            }
+
+            return this.Ok(res);
         }
 
         //todo: admin only
