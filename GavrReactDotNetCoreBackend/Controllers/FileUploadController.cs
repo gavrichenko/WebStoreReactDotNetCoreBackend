@@ -15,7 +15,7 @@ namespace GavrReactDotNetCoreBackend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddFile(IFormFile file)
         {
-            var subDomenName = "\\image.gavrichenko.ru";
+            var subDomenName = "\\image.lovely-house.ru";
             var currentAppDirectory = Directory.GetCurrentDirectory();
             var pathToStore = Path.Combine(Directory.GetParent(currentAppDirectory).FullName + subDomenName, "flowers", file.FileName);
             if (file.Length > 0)
@@ -27,7 +27,7 @@ namespace GavrReactDotNetCoreBackend.Controllers
             {
                 return this.BadRequest();
             }
-            var url = $"http://image.gavrichenko.ru/flowers/{file.FileName}";
+            var url = $"http://image.lovely-house.ru/flowers/{file.FileName}";
             return this.Ok(new { url = url });
         }
     }

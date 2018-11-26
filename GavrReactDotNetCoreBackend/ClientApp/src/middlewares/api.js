@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {START, SUCCESS, FAIL} from "../constance";
 
-const UrlByEnv = process.env.NODE_ENV == "development" ? "https://localhost:44393/" : "https://gavrichenko.ru/";
+const UrlByEnv = process.env.NODE_ENV == "development" ? "https://localhost:44393/" : "https://lovely-house.ru/";
 // hardcoded api's path here
 
 const axiosInstance = axios.create({
